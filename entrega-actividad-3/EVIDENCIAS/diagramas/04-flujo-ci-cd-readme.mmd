@@ -1,0 +1,26 @@
+flowchart LR
+    DEV[Desarrollador<br/>rama + commit] -->|push / pull request| GH[(GitHub<br/>repositorio)]
+    GH -->|dispara| CI{{GitHub Actions · CI}}
+    subgraph CI_JOBS[CI · ci.yml]
+      direction TB
+      BT[build-test · Node 22 y 24<br/>checkout → npm ci → sintaxis →<br/>ESLint → 43 pruebas + cobertura ≥70 %]
+      SEC[security<br/>Trivy: secretos, dependencias, Dockerfile<br/>+ npm audit → SARIF]
+      DK[docker<br/>build imagen → smoke test →<br/>Trivy imagen → SBOM]
+      SQ[sonar · SonarCloud<br/>se activa con SONAR_TOKEN]
+      BT --> DK
+      BT --> SQ
+    end
+    CI --> CI_JOBS
+    GH -->|clona main · pollSCM| JK{{Jenkins · CD}}
+    subgraph CD_STAGES[CD · Jenkinsfile]
+      direction TB
+      C1[Clonar repositorio] --> C2[Validar<br/>lint + pruebas en contenedor]
+      C2 --> C3[Construir imagen Docker<br/>tag commit-build]
+      C3 --> C4[Prueba de humo]
+      C4 --> C5[Trivy + SBOM<br/>gate HIGH/CRITICAL]
+      C5 --> C6[Publicar imagen<br/>registro local · Docker Hub · GHCR]
+      C6 -.opcional.-> C7[Desplegar en Kubernetes<br/>rollout + rollback condicionado]
+    end
+    JK --> CD_STAGES
+    C6 --> REG[(Registro de imágenes)]
+    REG -.-> K8S[(Clúster Kubernetes<br/>k8s/base)]

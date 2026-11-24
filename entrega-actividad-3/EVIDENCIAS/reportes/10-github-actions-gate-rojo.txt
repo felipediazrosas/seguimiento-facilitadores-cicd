@@ -1,0 +1,30 @@
+# GitHub Actions · prueba negativa del gate (rama test/gate-pruebas-falla, eliminada tras la prueba)
+URL: https://github.com/felipediazrosas/seguimiento-facilitadores-cicd/actions/runs/45504969995
+Evento: push
+Commit: d011891cc0d8784a28db24b0bf4082228a0ffb96
+Resultado: failure
+
+Jobs:
+  - Seguridad del repositorio (Trivy + npm audit) => success
+  - Build, lint y pruebas (Node 24) => failure
+  - Build, lint y pruebas (Node 22) => failure
+  - Imagen Docker (build, smoke test y Trivy) => skipped
+  - Calidad (SonarCloud) => skipped
+
+## Extracto del log fallido
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas)   ✖ Alistamiento 0,17 · Desarrollo 0,73 · Cierre y pendiente 0,10 · resto 0 (1.138775ms)
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ✖ Pesos del índice de carga — documentación, sección 7 (1.339468ms)
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ fail 1
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ✖ failing tests:
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ✖ Alistamiento 0,17 · Desarrollo 0,73 · Cierre y pendiente 0,10 · resto 0 (1.138775ms)
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas)   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas)     actual: 0.73,
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas)     expected: 0.5,
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ##[error]Process completed with exit code 1.
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas)   ✖ Alistamiento 0,17 · Desarrollo 0,73 · Cierre y pendiente 0,10 · resto 0 (1.445549ms)
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ✖ Pesos del índice de carga — documentación, sección 7 (1.55394ms)
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ fail 1
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ✖ failing tests:
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ✖ Alistamiento 0,17 · Desarrollo 0,73 · Cierre y pendiente 0,10 · resto 0 (1.445549ms)
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas)   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas)     actual: 0.73,

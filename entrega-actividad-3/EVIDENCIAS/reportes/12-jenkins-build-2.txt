@@ -1,0 +1,444 @@
+# Jenkins · job plataforma-guia-cd · build #2
+{"_class":"org.jenkinsci.plugins.workflow.job.WorkflowRun","duration":31506,"number":2,"result":"SUCCESS","timestamp":1795560676330}
+
+Started by user admin
+Obtained Jenkinsfile from git https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/plataforma-guia-cd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+ > git init /var/jenkins_home/workspace/plataforma-guia-cd # timeout=10
+Fetching upstream changes from https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 9b1ea5698736430172e0ae15eb7c2defc172b24f (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 9b1ea5698736430172e0ae15eb7c2defc172b24f # timeout=10
+Commit message: "feat: pipeline CI (GitHub Actions) y CD (Jenkins) para la plataforma"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-11-24T22:51:24.935Z] Timeout set to expire in 30 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clonar repositorio)
+[Pipeline] checkout
+[2026-11-24T22:51:25.075Z] Selected Git installation does not exist. Using Default
+[2026-11-24T22:51:25.075Z] The recommended git tool is: NONE
+[2026-11-24T22:51:25.075Z] No credentials specified
+[2026-11-24T22:51:25.076Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/plataforma-guia-cd/.git # timeout=10
+[2026-11-24T22:51:25.079Z] Fetching changes from the remote Git repository
+[2026-11-24T22:51:25.080Z]  > git config remote.origin.url https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git # timeout=10
+[2026-11-24T22:51:25.083Z] Fetching upstream changes from https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+[2026-11-24T22:51:25.083Z]  > git --version # timeout=10
+[2026-11-24T22:51:25.086Z]  > git --version # 'git version 2.47.3'
+[2026-11-24T22:51:25.087Z]  > git fetch --tags --force --progress -- https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-11-24T22:51:25.554Z]  > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+[2026-11-24T22:51:25.558Z] Checking out Revision 9b1ea5698736430172e0ae15eb7c2defc172b24f (refs/remotes/origin/main)
+[2026-11-24T22:51:25.558Z]  > git config core.sparsecheckout # timeout=10
+[2026-11-24T22:51:25.561Z]  > git checkout -f 9b1ea5698736430172e0ae15eb7c2defc172b24f # timeout=10
+[2026-11-24T22:51:25.590Z] Commit message: "feat: pipeline CI (GitHub Actions) y CD (Jenkins) para la plataforma"
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-11-24T22:51:25.950Z] + git rev-parse --short=12 HEAD
+[Pipeline] sh
+[2026-11-24T22:51:26.247Z] + git rev-parse HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-24T22:51:26.616Z] + git log -1 --format=Commit %H · %an · %s
+[2026-11-24T22:51:26.616Z] Commit 9b1ea5698736430172e0ae15eb7c2defc172b24f · Luis Felipe Diaz Rosas · feat: pipeline CI (GitHub Actions) y CD (Jenkins) para la plataforma
+[Pipeline] echo
+[2026-11-24T22:51:26.648Z] Imagen a construir: localhost:5000/plataforma-guia:9b1ea5698736-b2
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Validar (lint + pruebas))
+[Pipeline] sh
+[2026-11-24T22:51:26.989Z] + docker build --target test -t plataforma-guia:test-9b1ea5698736-b2 plataforma-guia-implementacion
+[2026-11-24T22:51:27.543Z] #0 building with "default" instance using docker driver
+[2026-11-24T22:51:27.543Z] 
+[2026-11-24T22:51:27.543Z] #1 [internal] load build definition from Dockerfile
+[2026-11-24T22:51:27.543Z] #1 transferring dockerfile: 2.60kB done
+[2026-11-24T22:51:27.543Z] #1 DONE 0.0s
+[2026-11-24T22:51:27.543Z] 
+[2026-11-24T22:51:27.543Z] #2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+[2026-11-24T22:51:28.455Z] #2 DONE 1.2s
+[2026-11-24T22:51:28.707Z] 
+[2026-11-24T22:51:28.707Z] #3 docker-image://docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
+[2026-11-24T22:51:28.707Z] #3 resolve docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183 0.0s done
+[2026-11-24T22:51:28.707Z] #3 CACHED
+[2026-11-24T22:51:28.707Z] 
+[2026-11-24T22:51:28.707Z] #4 [internal] load metadata for docker.io/library/node:24-alpine
+[2026-11-24T22:51:29.259Z] #4 DONE 0.6s
+[2026-11-24T22:51:29.510Z] 
+[2026-11-24T22:51:29.510Z] #5 [internal] load .dockerignore
+[2026-11-24T22:51:29.510Z] #5 transferring context: 286B done
+[2026-11-24T22:51:29.510Z] #5 DONE 0.0s
+[2026-11-24T22:51:29.510Z] 
+[2026-11-24T22:51:29.510Z] #6 [test 1/6] FROM docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+[2026-11-24T22:51:29.510Z] #6 resolve docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.0s done
+[2026-11-24T22:51:29.510Z] #6 DONE 0.0s
+[2026-11-24T22:51:29.510Z] 
+[2026-11-24T22:51:29.510Z] #7 [internal] load build context
+[2026-11-24T22:51:29.510Z] #7 transferring context: 1.30MB 0.1s done
+[2026-11-24T22:51:29.761Z] #7 DONE 0.1s
+[2026-11-24T22:51:29.761Z] 
+[2026-11-24T22:51:29.761Z] #8 [test 2/6] WORKDIR /app
+[2026-11-24T22:51:29.761Z] #8 CACHED
+[2026-11-24T22:51:29.761Z] 
+[2026-11-24T22:51:29.761Z] #9 [test 3/6] COPY package.json package-lock.json ./
+[2026-11-24T22:51:29.761Z] #9 DONE 0.0s
+[2026-11-24T22:51:29.761Z] 
+[2026-11-24T22:51:29.761Z] #10 [test 4/6] RUN npm ci --no-audit --no-fund
+[2026-11-24T22:51:31.625Z] #10 2.238 
+[2026-11-24T22:51:31.625Z] #10 2.238 added 80 packages in 2s
+[2026-11-24T22:51:31.875Z] #10 2.241 npm notice
+[2026-11-24T22:51:31.876Z] #10 2.241 npm notice New major version of npm available! 11.19.1 -> 12.2.3
+[2026-11-24T22:51:31.876Z] #10 2.241 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+[2026-11-24T22:51:31.876Z] #10 2.241 npm notice To update run: npm install -g npm@12.2.3
+[2026-11-24T22:51:31.876Z] #10 2.241 npm notice
+[2026-11-24T22:51:31.876Z] #10 DONE 2.3s
+[2026-11-24T22:51:31.876Z] 
+[2026-11-24T22:51:31.876Z] #11 [test 5/6] COPY . .
+[2026-11-24T22:51:31.876Z] #11 DONE 0.0s
+[2026-11-24T22:51:31.876Z] 
+[2026-11-24T22:51:31.876Z] #12 [test 6/6] RUN npm run lint && npm test
+[2026-11-24T22:51:32.126Z] #12 0.370 
+[2026-11-24T22:51:32.126Z] #12 0.370 > plataforma-guia-implementacion@1.2.0 lint
+[2026-11-24T22:51:32.126Z] #12 0.370 > eslint .
+[2026-11-24T22:51:32.126Z] #12 0.370 
+[2026-11-24T22:51:33.471Z] #12 1.352 
+[2026-11-24T22:51:33.471Z] #12 1.352 > plataforma-guia-implementacion@1.2.0 test
+[2026-11-24T22:51:33.471Z] #12 1.352 > node --test --test-reporter=spec "test/*.test.js"
+[2026-11-24T22:51:33.471Z] #12 1.352 
+[2026-11-24T22:51:33.471Z] #12 1.473 ✔ el proceso estándar tiene nueve etapas numeradas del 1 al 9 (3.291569ms)
+[2026-11-24T22:51:33.471Z] #12 1.474 ✔ cada etapa tiene título, entradas, salidas, pasos, checklist y criterio de terminado (0.403161ms)
+[2026-11-24T22:51:33.471Z] #12 1.474 ✔ los controles del checklist no se repiten dentro de una etapa (0.308153ms)
+[2026-11-24T22:51:33.471Z] #12 1.474 ✔ hay dieciséis plantillas de mensaje con identificador único (0.192419ms)
+[2026-11-24T22:51:33.471Z] #12 1.475 ✔ toda plantilla referenciada por una etapa existe (0.588829ms)
+[2026-11-24T22:51:33.471Z] #12 1.475 ✔ el checklist diario tiene once controles en tres momentos del día (0.238105ms)
+[2026-11-24T22:51:33.471Z] #12 1.476 ✔ el ritmo semanal fija el miércoles como día de monitoreo (0.294442ms)
+[2026-11-24T22:51:33.471Z] #12 1.491 ▶ fase() — documentación, sección 7 «Reglas de negocio»
+[2026-11-24T22:51:33.471Z] #12 1.491   ✔ sin fechas → «Sin fecha» (1.697189ms)
+[2026-11-24T22:51:33.471Z] #12 1.491   ✔ faltan 8 días o más para iniciar → «Prox. Inicio» (0.30824ms)
+[2026-11-24T22:51:33.471Z] #12 1.491   ✔ entre 7 días antes y 5 días después del inicio → «Alistamiento» (0.229844ms)
+[2026-11-24T22:51:33.471Z] #12 1.491   ✔ curso en marcha lejos del cierre → «Desarrollo» (0.282641ms)
+[2026-11-24T22:51:33.471Z] #12 1.493   ✔ a 7 días o menos del cierre → «Cierre» (0.654425ms)
+[2026-11-24T22:51:33.471Z] #12 1.495   ✔ cierre vencido sin reporte → «Pend. Reporte Cierre» (0.28159ms)
+[2026-11-24T22:51:33.471Z] #12 1.495   ✔ con reporte de cierre en el Excel → «Cerrado» (0.235841ms)
+[2026-11-24T22:51:33.471Z] #12 1.495   ✔ con reporte de cierre registrado en la plataforma → «Cerrado» (0.451245ms)
+[2026-11-24T22:51:33.472Z] #12 1.495   ✔ el alistamiento tiene prioridad sobre el reporte de cierre (orden de la regla) (0.750916ms)
+[2026-11-24T22:51:33.472Z] #12 1.495 ✔ fase() — documentación, sección 7 «Reglas de negocio» (7.853112ms)
+[2026-11-24T22:51:33.472Z] #12 1.496 ▶ Pesos del índice de carga — documentación, sección 7
+[2026-11-24T22:51:33.472Z] #12 1.496   ✔ Alistamiento 0,17 · Desarrollo 0,73 · Cierre y pendiente 0,10 · resto 0 (0.755988ms)
+[2026-11-24T22:51:33.472Z] #12 1.496 ✔ Pesos del índice de carga — documentación, sección 7 (1.093523ms)
+[2026-11-24T22:51:33.472Z] #12 1.497 ▶ Utilidades de Excel (js/excel.js)
+[2026-11-24T22:51:33.472Z] #12 1.497   ✔ nz() normaliza encabezados sin importar tildes, mayúsculas ni espacios (0.900034ms)
+[2026-11-24T22:51:33.472Z] #12 1.497   ✔ colL() y colN() convierten columnas en ambos sentidos (A, Z, AA, AZ, XFD) (0.452651ms)
+[2026-11-24T22:51:33.472Z] #12 1.497   ✔ chunks() parte los datos en bloques menores al límite sin perder elementos (2.668951ms)
+[2026-11-24T22:51:33.472Z] #12 1.498   ✔ xesc() escapa XML y elimina caracteres de control no válidos (0.628124ms)
+[2026-11-24T22:51:33.472Z] #12 1.498 ✔ Utilidades de Excel (js/excel.js) (5.315476ms)
+[2026-11-24T22:51:33.472Z] #12 1.556 
+[2026-11-24T22:51:33.472Z] #12 1.556   Primer usuario creado →  usuario: coord.test   contraseña: (la de ADMIN_PASS)
+[2026-11-24T22:51:33.472Z] #12 1.556   Cámbiela después de entrar (menú de usuario → Cambiar contraseña).
+[2026-11-24T22:51:33.472Z] #12 1.556 
+[2026-11-24T22:51:33.472Z] #12 1.639 ▶ Salud y protecciones
+[2026-11-24T22:51:33.472Z] #12 1.639   ✔ GET /api/health responde 200 sin sesión e informa cifrado (63.632651ms)
+[2026-11-24T22:51:33.472Z] #12 1.645   ✔ una escritura sin el encabezado X-Requested-With es rechazada (anti-CSRF) (8.0578ms)
+[2026-11-24T22:51:33.472Z] #12 1.653   ✔ las rutas protegidas exigen sesión (401) (6.223347ms)
+[2026-11-24T22:51:33.472Z] #12 1.653 ✔ Salud y protecciones (79.111337ms)
+[2026-11-24T22:51:33.472Z] #12 1.701 ▶ Autenticación
+[2026-11-24T22:51:33.472Z] #12 1.701   ✔ credenciales incorrectas → 401 sin revelar detalles (48.233003ms)
+[2026-11-24T22:51:33.472Z] #12 1.741   ✔ login correcto entrega cookie HttpOnly y SameSite=Strict (40.641599ms)
+[2026-11-24T22:51:33.722Z] #12 1.744   ✔ GET /api/me devuelve el usuario de la sesión (2.58516ms)
+[2026-11-24T22:51:33.723Z] #12 1.755   ✔ bloqueo de 15 minutos tras 5 intentos fallidos (429) (10.889836ms)
+[2026-11-24T22:51:33.723Z] #12 1.756 ✔ Autenticación (103.049731ms)
+[2026-11-24T22:51:33.723Z] #12 1.798 ▶ Usuarios
+[2026-11-24T22:51:33.723Z] #12 1.798   ✔ coordinación crea un facilitador vinculado al Excel (42.026333ms)
+[2026-11-24T22:51:33.723Z] #12 1.803   ✔ contraseña corta (< 8) → 400; usuario duplicado → 409; rol inválido → 400 (5.805651ms)
+[2026-11-24T22:51:33.723Z] #12 1.805   ✔ coordinación no puede quitarse su propio rol (1.623049ms)
+[2026-11-24T22:51:33.723Z] #12 1.848   ✔ el facilitador inicia sesión y no puede gestionar usuarios (403) (42.420819ms)
+[2026-11-24T22:51:33.723Z] #12 1.848 ✔ Usuarios (92.365626ms)
+[2026-11-24T22:51:33.973Z] #12 1.857 ▶ Autorización por rol (aplicada por el servidor)
+[2026-11-24T22:51:33.973Z] #12 1.857   ✔ coordinación carga los datos del Excel (8.879476ms)
+[2026-11-24T22:51:33.973Z] #12 1.859   ✔ el facilitador solo recibe sus cursos, sus módulos y su ficha (2.244717ms)
+[2026-11-24T22:51:33.973Z] #12 1.861   ✔ el facilitador no puede escribir en los datos del Excel (403) (1.640396ms)
+[2026-11-24T22:51:33.973Z] #12 1.866   ✔ novedad en un curso ajeno → 403; en el propio → 201 con fa fijado por el servidor (4.405488ms)
+[2026-11-24T22:51:33.974Z] #12 1.872   ✔ indicaciones: el facilitador solo modifica est, fh y resp (7.328014ms)
+[2026-11-24T22:51:33.974Z] #12 1.876   ✔ checklist diario: coordinación consulta pero no diligencia (403) (3.679887ms)
+[2026-11-24T22:51:33.974Z] #12 1.879   ✔ ids inválidos → 400 y colecciones desconocidas → 404 (2.619385ms)
+[2026-11-24T22:51:33.974Z] #12 1.885   ✔ /api/versions cambia después de una escritura (5.544578ms)
+[2026-11-24T22:51:33.974Z] #12 1.885 ✔ Autorización por rol (aplicada por el servidor) (36.949143ms)
+[2026-11-24T22:51:33.974Z] #12 1.885 ▶ Datos en disco
+[2026-11-24T22:51:33.974Z] #12 1.885   ✔ los archivos de datos y usuarios quedan cifrados (no contienen texto plano) (0.525054ms)
+[2026-11-24T22:51:33.974Z] #12 1.885 ✔ Datos en disco (0.629784ms)
+[2026-11-24T22:51:33.974Z] #12 1.890 ▶ Archivos estáticos
+[2026-11-24T22:51:33.974Z] #12 1.890   ✔ sirve index.html en / (4.974712ms)
+[2026-11-24T22:51:33.974Z] #12 1.895   ✔ nunca expone el código del servidor, archivos ocultos ni rutas fuera de la raíz (3.700729ms)
+[2026-11-24T22:51:33.974Z] #12 1.895 ✔ Archivos estáticos (8.932558ms)
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ tests 43
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ suites 9
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ pass 43
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ fail 0
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ cancelled 0
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ skipped 0
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ todo 0
+[2026-11-24T22:51:33.974Z] #12 1.904 ℹ duration_ms 506.249409
+[2026-11-24T22:51:33.974Z] #12 DONE 1.9s
+[2026-11-24T22:51:33.974Z] 
+[2026-11-24T22:51:33.974Z] #13 exporting to image
+[2026-11-24T22:51:33.974Z] #13 exporting layers
+[2026-11-24T22:51:34.525Z] #13 exporting layers 0.7s done
+[2026-11-24T22:51:34.525Z] #13 exporting manifest sha256:c967b87cef7aa107a4481a1e90ace2b0e07f69920210d3033d515c4fd794c488 done
+[2026-11-24T22:51:34.525Z] #13 exporting config sha256:1f19183418305c7bfd00bba3f66903fa291e52e3d646978a83eb57f94c4a74b9 done
+[2026-11-24T22:51:34.525Z] #13 exporting attestation manifest sha256:8a2b55c2c157ec69eaa5e40bcac464d4df2c2a6e76cd27529be6af8ebb5c0f57 0.0s done
+[2026-11-24T22:51:34.525Z] #13 exporting manifest list sha256:47da73c07e7e4641585739207440531f9254748f96355e30cf330649b83d14dd done
+[2026-11-24T22:51:34.525Z] #13 naming to docker.io/library/plataforma-guia:test-9b1ea5698736-b2 done
+[2026-11-24T22:51:34.525Z] #13 unpacking to docker.io/library/plataforma-guia:test-9b1ea5698736-b2
+[2026-11-24T22:51:34.776Z] #13 unpacking to docker.io/library/plataforma-guia:test-9b1ea5698736-b2 0.4s done
+[2026-11-24T22:51:35.027Z] #13 DONE 1.1s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Construir imagen Docker)
+[Pipeline] sh
+[2026-11-24T22:51:35.384Z] + docker build --target runtime --build-arg APP_VERSION=9b1ea5698736-b2 --build-arg VCS_REF=9b1ea5698736430172e0ae15eb7c2defc172b24f -t localhost:5000/plataforma-guia:9b1ea5698736-b2 plataforma-guia-implementacion
+[2026-11-24T22:51:35.635Z] #0 building with "default" instance using docker driver
+[2026-11-24T22:51:35.635Z] 
+[2026-11-24T22:51:35.635Z] #1 [internal] load build definition from Dockerfile
+[2026-11-24T22:51:35.635Z] #1 transferring dockerfile: 2.60kB done
+[2026-11-24T22:51:35.635Z] #1 DONE 0.0s
+[2026-11-24T22:51:35.635Z] 
+[2026-11-24T22:51:35.635Z] #2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+[2026-11-24T22:51:35.635Z] #2 DONE 0.2s
+[2026-11-24T22:51:35.886Z] 
+[2026-11-24T22:51:35.886Z] #3 docker-image://docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
+[2026-11-24T22:51:35.886Z] #3 resolve docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183 0.0s done
+[2026-11-24T22:51:35.886Z] #3 CACHED
+[2026-11-24T22:51:35.886Z] 
+[2026-11-24T22:51:35.886Z] #4 [internal] load metadata for docker.io/library/node:24-alpine
+[2026-11-24T22:51:35.886Z] #4 DONE 0.2s
+[2026-11-24T22:51:36.137Z] 
+[2026-11-24T22:51:36.137Z] #5 [internal] load .dockerignore
+[2026-11-24T22:51:36.137Z] #5 transferring context: 286B done
+[2026-11-24T22:51:36.137Z] #5 DONE 0.0s
+[2026-11-24T22:51:36.137Z] 
+[2026-11-24T22:51:36.137Z] #6 [internal] load build context
+[2026-11-24T22:51:36.137Z] #6 transferring context: 536B done
+[2026-11-24T22:51:36.137Z] #6 DONE 0.0s
+[2026-11-24T22:51:36.137Z] 
+[2026-11-24T22:51:36.137Z] #7 [runtime 1/8] FROM docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+[2026-11-24T22:51:36.137Z] #7 resolve docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.0s done
+[2026-11-24T22:51:36.137Z] #7 CACHED
+[2026-11-24T22:51:36.137Z] 
+[2026-11-24T22:51:36.137Z] #8 [runtime 2/8] RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack            /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack            /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg  && mkdir -p /data && chown node:node /data
+[2026-11-24T22:51:36.387Z] #8 DONE 0.4s
+[2026-11-24T22:51:36.638Z] 
+[2026-11-24T22:51:36.638Z] #9 [runtime 3/8] WORKDIR /app
+[2026-11-24T22:51:36.638Z] #9 DONE 0.0s
+[2026-11-24T22:51:36.638Z] 
+[2026-11-24T22:51:36.638Z] #10 [runtime 4/8] COPY index.html ./
+[2026-11-24T22:51:36.638Z] #10 DONE 0.0s
+[2026-11-24T22:51:36.638Z] 
+[2026-11-24T22:51:36.638Z] #11 [runtime 5/8] COPY css/ ./css/
+[2026-11-24T22:51:36.638Z] #11 DONE 0.0s
+[2026-11-24T22:51:36.638Z] 
+[2026-11-24T22:51:36.638Z] #12 [runtime 6/8] COPY js/ ./js/
+[2026-11-24T22:51:36.638Z] #12 DONE 0.0s
+[2026-11-24T22:51:36.888Z] 
+[2026-11-24T22:51:36.889Z] #13 [runtime 7/8] COPY vendor/ ./vendor/
+[2026-11-24T22:51:36.889Z] #13 DONE 0.0s
+[2026-11-24T22:51:36.889Z] 
+[2026-11-24T22:51:36.889Z] #14 [runtime 8/8] COPY server/ ./server/
+[2026-11-24T22:51:36.889Z] #14 DONE 0.0s
+[2026-11-24T22:51:36.889Z] 
+[2026-11-24T22:51:36.889Z] #15 exporting to image
+[2026-11-24T22:51:36.889Z] #15 exporting layers
+[2026-11-24T22:51:36.889Z] #15 exporting layers 0.2s done
+[2026-11-24T22:51:37.139Z] #15 exporting manifest sha256:81328eaa886d6b57b8c15a356b8db7ec5bc49b7943e8201f785c9639731c5f20 done
+[2026-11-24T22:51:37.139Z] #15 exporting config sha256:40f0c66cc5d3e1cbbc10b6fd8051cf05920c2c5eea1ab043c5604962c8b15453 done
+[2026-11-24T22:51:37.139Z] #15 exporting attestation manifest sha256:3bb5fd033ec89883d1ba17bf73431741cbae642df1fb2d27d3f00218c1c33370 0.0s done
+[2026-11-24T22:51:37.139Z] #15 exporting manifest list sha256:c3734b01c3c7cf168559acd021d98c33b360f5d46d2a4871b61f4fa59f578549 done
+[2026-11-24T22:51:37.139Z] #15 naming to localhost:5000/plataforma-guia:9b1ea5698736-b2 done
+[2026-11-24T22:51:37.139Z] #15 unpacking to localhost:5000/plataforma-guia:9b1ea5698736-b2 0.1s done
+[2026-11-24T22:51:37.139Z] #15 DONE 0.4s
+[2026-11-24T22:51:37.139Z] + docker image inspect localhost:5000/plataforma-guia:9b1ea5698736-b2 --format Imagen {{index .RepoTags 0}} · {{.Size}} bytes · usuario {{.Config.User}} · revisión {{index .Config.Labels "org.opencontainers.image.revision"}}
+[2026-11-24T22:51:37.390Z] Imagen localhost:5000/plataforma-guia:9b1ea5698736-b2 · 62963684 bytes · usuario node · revisión 9b1ea5698736430172e0ae15eb7c2defc172b24f
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Prueba de humo del contenedor)
+[Pipeline] sh
+[2026-11-24T22:51:37.772Z] + SMOKE=smoke-jenkins-plataforma-guia-cd-2
+[2026-11-24T22:51:37.772Z] + od -An -N16 -tx1 /dev/urandom
+[2026-11-24T22:51:37.772Z] + tr -d  \n
+[2026-11-24T22:51:37.772Z] + SMOKE_KEY=<REDACTADO: clave efímera impresa por set -x; corregido en el commit siguiente>
+[2026-11-24T22:51:37.772Z] + docker run -d --name smoke-jenkins-plataforma-guia-cd-2 --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges:true -e DATA_KEY=<REDACTADO: clave efímera impresa por set -x; corregido en el commit siguiente> -e ADMIN_USER=smoke -e ADMIN_PASS=<REDACTADO: clave efímera impresa por set -x; corregido en el commit siguiente> localhost:5000/plataforma-guia:9b1ea5698736-b2
+[2026-11-24T22:51:37.772Z] 1b8220bc22938d0e9007a9d89ab502505bc39782caa2ff9a26b731e73f52c0bf
+[2026-11-24T22:51:38.023Z] + seq 1 30
+[2026-11-24T22:51:38.024Z] + docker exec smoke-jenkins-plataforma-guia-cd-2 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T22:51:38.024Z] + sleep 1
+[2026-11-24T22:51:38.937Z] + docker exec smoke-jenkins-plataforma-guia-cd-2 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T22:51:39.188Z] {"ok":true,"auth":true,"encrypted":true}+ echo
+[2026-11-24T22:51:39.188Z] 
+[2026-11-24T22:51:39.188Z] + break
+[2026-11-24T22:51:39.188Z] + docker exec smoke-jenkins-plataforma-guia-cd-2 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T22:51:39.188Z] + grep -q "ok":true
+[2026-11-24T22:51:39.188Z] + docker exec smoke-jenkins-plataforma-guia-cd-2 id -u
+[2026-11-24T22:51:39.188Z] + test 1000 != 0
+[2026-11-24T22:51:39.188Z] + echo Prueba de humo OK: /api/health responde y el proceso no corre como root
+[2026-11-24T22:51:39.188Z] Prueba de humo OK: /api/health responde y el proceso no corre como root
+Post stage
+[Pipeline] sh
+[2026-11-24T22:51:39.526Z] + docker rm -f smoke-jenkins-plataforma-guia-cd-2
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Escaneo de seguridad (Trivy))
+[Pipeline] sh
+[2026-11-24T22:51:39.891Z] + TRIVY=docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2
+[2026-11-24T22:51:39.891Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --severity HIGH,CRITICAL --format table localhost:5000/plataforma-guia:9b1ea5698736-b2
+[2026-11-24T22:51:42.375Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --format cyclonedx localhost:5000/plataforma-guia:9b1ea5698736-b2
+[2026-11-24T22:51:45.605Z] + cat trivy-imagen.txt
+[2026-11-24T22:51:45.605Z] 
+[2026-11-24T22:51:45.605Z] Report Summary
+[2026-11-24T22:51:45.605Z] 
+[2026-11-24T22:51:45.605Z] ┌────────────────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+[2026-11-24T22:51:45.605Z] │                             Target                             │  Type  │ Vulnerabilities │ Secrets │
+[2026-11-24T22:51:45.605Z] ├────────────────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+[2026-11-24T22:51:45.605Z] │ localhost:5000/plataforma-guia:9b1ea5698736-b2 (alpine 3.24.4) │ alpine │        0        │    -    │
+[2026-11-24T22:51:45.605Z] └────────────────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+[2026-11-24T22:51:45.605Z] Legend:
+[2026-11-24T22:51:45.605Z] - '-': Not scanned
+[2026-11-24T22:51:45.605Z] - '0': Clean (no security findings detected)
+[2026-11-24T22:51:45.605Z] 
+[2026-11-24T22:51:45.605Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 localhost:5000/plataforma-guia:9b1ea5698736-b2
+[2026-11-24T22:51:45.856Z] 
+[2026-11-24T22:51:45.856Z] Report Summary
+[2026-11-24T22:51:45.856Z] 
+[2026-11-24T22:51:45.857Z] ┌────────────────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+[2026-11-24T22:51:45.857Z] │                             Target                             │  Type  │ Vulnerabilities │ Secrets │
+[2026-11-24T22:51:45.857Z] ├────────────────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+[2026-11-24T22:51:45.857Z] │ localhost:5000/plataforma-guia:9b1ea5698736-b2 (alpine 3.24.4) │ alpine │        0        │    -    │
+[2026-11-24T22:51:45.857Z] └────────────────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+[2026-11-24T22:51:45.857Z] Legend:
+[2026-11-24T22:51:45.857Z] - '-': Not scanned
+[2026-11-24T22:51:45.857Z] - '0': Clean (no security findings detected)
+[2026-11-24T22:51:45.857Z] 
+Post stage
+[Pipeline] archiveArtifacts
+[2026-11-24T22:51:45.910Z] Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publicar imagen en el registro)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-11-24T22:51:46.047Z] Registro sin autenticación: localhost:5000
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-24T22:51:46.345Z] + docker push localhost:5000/plataforma-guia:9b1ea5698736-b2
+[2026-11-24T22:51:46.345Z] The push refers to repository [localhost:5000/plataforma-guia]
+[2026-11-24T22:51:46.345Z] 81e6f0661acc: Waiting
+[2026-11-24T22:51:46.345Z] 44136fa355b3: Waiting
+[2026-11-24T22:51:46.345Z] 86781d25d398: Waiting
+[2026-11-24T22:51:46.345Z] 881fc932939e: Waiting
+[2026-11-24T22:51:46.345Z] 81e6f0661acc: Waiting
+[2026-11-24T22:51:46.345Z] 44136fa355b3: Waiting
+[2026-11-24T22:51:46.345Z] 86781d25d398: Waiting
+[2026-11-24T22:51:46.345Z] 881fc932939e: Waiting
+[2026-11-24T22:51:46.596Z] 881fc932939e: Waiting
+[2026-11-24T22:51:46.596Z] 81e6f0661acc: Waiting
+[2026-11-24T22:51:46.596Z] 44136fa355b3: Waiting
+[2026-11-24T22:51:46.596Z] 86781d25d398: Waiting
+[2026-11-24T22:51:46.596Z] 81e6f0661acc: Waiting
+[2026-11-24T22:51:46.596Z] 44136fa355b3: Waiting
+[2026-11-24T22:51:46.596Z] 86781d25d398: Waiting
+[2026-11-24T22:51:46.596Z] 881fc932939e: Waiting
+[2026-11-24T22:51:46.847Z] 81e6f0661acc: Waiting
+[2026-11-24T22:51:46.847Z] 44136fa355b3: Waiting
+[2026-11-24T22:51:46.847Z] 86781d25d398: Waiting
+[2026-11-24T22:51:46.847Z] 881fc932939e: Waiting
+[2026-11-24T22:51:46.847Z] 81e6f0661acc: Waiting
+[2026-11-24T22:51:46.847Z] 44136fa355b3: Waiting
+[2026-11-24T22:51:46.847Z] 86781d25d398: Waiting
+[2026-11-24T22:51:46.847Z] 881fc932939e: Waiting
+[2026-11-24T22:51:46.847Z] 81e6f0661acc: Pushed
+[2026-11-24T22:51:46.847Z] 44136fa355b3: Pushed
+[2026-11-24T22:51:46.847Z] 881fc932939e: Pushed
+[2026-11-24T22:51:46.847Z] 7bb632bc9bd7: Pushed
+[2026-11-24T22:51:46.847Z] 9f736ef1517e: Waiting
+[2026-11-24T22:51:46.847Z] e5275e6c1548: Waiting
+[2026-11-24T22:51:47.098Z] 7eb569707982: Pushed
+[2026-11-24T22:51:47.098Z] e5275e6c1548: Pushed
+[2026-11-24T22:51:47.098Z] 2864c777ddee: Pushed
+[2026-11-24T22:51:47.098Z] cfb9481026c1: Pushed
+[2026-11-24T22:51:47.098Z] f0917de7304d: Pushed
+[2026-11-24T22:51:47.098Z] 81c4d4fb9075: Pushed
+[2026-11-24T22:51:47.098Z] 2e87ffc4bc7c: Pushed
+[2026-11-24T22:51:47.098Z] 9f736ef1517e: Pushed
+[2026-11-24T22:51:47.098Z] 86781d25d398: Pushed
+[2026-11-24T22:51:47.098Z] 9b1ea5698736-b2: digest: sha256:c3734b01c3c7cf168559acd021d98c33b360f5d46d2a4871b61f4fa59f578549 size: 856
+[2026-11-24T22:51:47.098Z] + [  = true ]
+[2026-11-24T22:51:47.098Z] + docker image inspect localhost:5000/plataforma-guia:9b1ea5698736-b2 --format {{index .RepoDigests 0}}
+[2026-11-24T22:51:47.098Z] + DIGEST=localhost:5000/plataforma-guia@sha256:c3734b01c3c7cf168559acd021d98c33b360f5d46d2a4871b61f4fa59f578549
+[2026-11-24T22:51:47.098Z] + echo Publicada: localhost:5000/plataforma-guia:9b1ea5698736-b2
+[2026-11-24T22:51:47.098Z] Publicada: localhost:5000/plataforma-guia:9b1ea5698736-b2
+[2026-11-24T22:51:47.098Z] + echo Digest inmutable: localhost:5000/plataforma-guia@sha256:c3734b01c3c7cf168559acd021d98c33b360f5d46d2a4871b61f4fa59f578549
+[2026-11-24T22:51:47.098Z] Digest inmutable: localhost:5000/plataforma-guia@sha256:c3734b01c3c7cf168559acd021d98c33b360f5d46d2a4871b61f4fa59f578549
+[2026-11-24T22:51:47.098Z] + printf imagen=%s\ndigest=%s\ncommit=%s\nbuild=%s\n localhost:5000/plataforma-guia:9b1ea5698736-b2 localhost:5000/plataforma-guia@sha256:c3734b01c3c7cf168559acd021d98c33b360f5d46d2a4871b61f4fa59f578549 9b1ea5698736430172e0ae15eb7c2defc172b24f 2
+[Pipeline] archiveArtifacts
+[2026-11-24T22:51:47.118Z] Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Desplegar (Kubernetes))
+Stage "Desplegar (Kubernetes)" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
+[2026-11-24T22:51:47.610Z] + docker image rm -f plataforma-guia:test-9b1ea5698736-b2
+[2026-11-24T22:51:47.610Z] + docker logout 
+[Pipeline] echo
+[2026-11-24T22:51:47.634Z] CD completado: localhost:5000/plataforma-guia:9b1ea5698736-b2 construida, validada, escaneada y publicada.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

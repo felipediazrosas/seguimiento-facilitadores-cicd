@@ -1,0 +1,84 @@
+# npm run test:coverage  ·  Node v22.14.0
+✔ el proceso estándar tiene nueve etapas numeradas del 1 al 9 (4.2938ms)
+✔ cada etapa tiene título, entradas, salidas, pasos, checklist y criterio de terminado (0.4864ms)
+✔ los controles del checklist no se repiten dentro de una etapa (0.2193ms)
+✔ hay dieciséis plantillas de mensaje con identificador único (0.1236ms)
+✔ toda plantilla referenciada por una etapa existe (0.2868ms)
+✔ el checklist diario tiene once controles en tres momentos del día (0.1689ms)
+✔ el ritmo semanal fija el miércoles como día de monitoreo (0.1932ms)
+▶ fase() — documentación, sección 7 «Reglas de negocio»
+  ✔ sin fechas → «Sin fecha» (0.9235ms)
+  ✔ faltan 8 días o más para iniciar → «Prox. Inicio» (0.2846ms)
+  ✔ entre 7 días antes y 5 días después del inicio → «Alistamiento» (0.1296ms)
+  ✔ curso en marcha lejos del cierre → «Desarrollo» (0.2193ms)
+  ✔ a 7 días o menos del cierre → «Cierre» (0.1725ms)
+  ✔ cierre vencido sin reporte → «Pend. Reporte Cierre» (0.1056ms)
+  ✔ con reporte de cierre en el Excel → «Cerrado» (0.1183ms)
+  ✔ con reporte de cierre registrado en la plataforma → «Cerrado» (0.1397ms)
+  ✔ el alistamiento tiene prioridad sobre el reporte de cierre (orden de la regla) (0.0975ms)
+✔ fase() — documentación, sección 7 «Reglas de negocio» (3.5283ms)
+▶ Pesos del índice de carga — documentación, sección 7
+  ✔ Alistamiento 0,17 · Desarrollo 0,73 · Cierre y pendiente 0,10 · resto 0 (0.1031ms)
+✔ Pesos del índice de carga — documentación, sección 7 (0.1866ms)
+▶ Utilidades de Excel (js/excel.js)
+  ✔ nz() normaliza encabezados sin importar tildes, mayúsculas ni espacios (0.4299ms)
+  ✔ colL() y colN() convierten columnas en ambos sentidos (A, Z, AA, AZ, XFD) (0.2905ms)
+  ✔ chunks() parte los datos en bloques menores al límite sin perder elementos (1.009ms)
+  ✔ xesc() escapa XML y elimina caracteres de control no válidos (0.2348ms)
+✔ Utilidades de Excel (js/excel.js) (2.1292ms)
+
+  Primer usuario creado →  usuario: coord.test   contraseña: (la de ADMIN_PASS)
+  Cámbiela después de entrar (menú de usuario → Cambiar contraseña).
+
+▶ Salud y protecciones
+  ✔ GET /api/health responde 200 sin sesión e informa cifrado (44.8868ms)
+  ✔ una escritura sin el encabezado X-Requested-With es rechazada (anti-CSRF) (9.0302ms)
+  ✔ las rutas protegidas exigen sesión (401) (5.0631ms)
+✔ Salud y protecciones (59.8661ms)
+▶ Autenticación
+  ✔ credenciales incorrectas → 401 sin revelar detalles (62.1738ms)
+  ✔ login correcto entrega cookie HttpOnly y SameSite=Strict (60.069ms)
+  ✔ GET /api/me devuelve el usuario de la sesión (2.2944ms)
+  ✔ bloqueo de 15 minutos tras 5 intentos fallidos (429) (11.8835ms)
+✔ Autenticación (136.7597ms)
+▶ Usuarios
+  ✔ coordinación crea un facilitador vinculado al Excel (65.7208ms)
+  ✔ contraseña corta (< 8) → 400; usuario duplicado → 409; rol inválido → 400 (7.5688ms)
+  ✔ coordinación no puede quitarse su propio rol (2.1158ms)
+  ✔ el facilitador inicia sesión y no puede gestionar usuarios (403) (58.9884ms)
+✔ Usuarios (134.7015ms)
+▶ Autorización por rol (aplicada por el servidor)
+  ✔ coordinación carga los datos del Excel (9.9824ms)
+  ✔ el facilitador solo recibe sus cursos, sus módulos y su ficha (2.471ms)
+  ✔ el facilitador no puede escribir en los datos del Excel (403) (2.2449ms)
+  ✔ novedad en un curso ajeno → 403; en el propio → 201 con fa fijado por el servidor (6.5401ms)
+  ✔ indicaciones: el facilitador solo modifica est, fh y resp (9.0806ms)
+  ✔ checklist diario: coordinación consulta pero no diligencia (403) (5.1213ms)
+  ✔ ids inválidos → 400 y colecciones desconocidas → 404 (2.53ms)
+  ✔ /api/versions cambia después de una escritura (7.3947ms)
+✔ Autorización por rol (aplicada por el servidor) (45.8726ms)
+▶ Datos en disco
+  ✔ los archivos de datos y usuarios quedan cifrados (no contienen texto plano) (1.0482ms)
+✔ Datos en disco (1.1356ms)
+▶ Archivos estáticos
+  ✔ sirve index.html en / (11.6544ms)
+  ✔ nunca expone el código del servidor, archivos ocultos ni rutas fuera de la raíz (5.3641ms)
+✔ Archivos estáticos (17.2019ms)
+ℹ tests 43
+ℹ suites 9
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 758.3774
+ℹ start of coverage report
+ℹ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ℹ file       | line % | branch % | funcs % | uncovered lines
+ℹ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ℹ server     |        |          |         | 
+ℹ  server.js |  82.11 |    68.78 |   95.24 | 47-55 157-159 162-164 182 205-210 220 239-240 247-248 297-300 304-317 332-335 343-344 370-375 377-389 391-392 427-428 445-451 465-466 495-501
+ℹ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ℹ all files  |  82.11 |    68.78 |   95.24 | 
+ℹ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ℹ end of coverage report

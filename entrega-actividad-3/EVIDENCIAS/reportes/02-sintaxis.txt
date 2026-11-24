@@ -1,0 +1,2 @@
+# npm run check:syntax
+Resultado: los 6 módulos JS compilan (node --check, exit 0)

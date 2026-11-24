@@ -1,0 +1,53 @@
+# GitHub Actions · ejecución verde (push a main)
+URL: https://github.com/felipediazrosas/seguimiento-facilitadores-cicd/actions/runs/45504468140
+Evento: push
+Commit: 9b1ea5698736430172e0ae15eb7c2defc172b24f
+Inicio: 2026-11-24T22:49:20Z  Fin: 2026-11-24T22:50:08Z
+Resultado: success
+
+Jobs:
+  - Build, lint y pruebas (Node 22) => success  (2026-11-24T22:49:23Z → 2026-11-24T22:49:32Z)
+  - Seguridad del repositorio (Trivy + npm audit) => success  (2026-11-24T22:49:23Z → 2026-11-24T22:50:05Z)
+  - Build, lint y pruebas (Node 24) => success  (2026-11-24T22:49:23Z → 2026-11-24T22:49:35Z)
+  - Imagen Docker (build, smoke test y Trivy) => success  (2026-11-24T22:49:37Z → 2026-11-24T22:50:08Z)
+  - Calidad (SonarCloud) => success  (2026-11-24T22:49:37Z → 2026-11-24T22:49:40Z)
+
+## Extracto del log (pasos clave)
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile) ##[group]Run npm ci --no-audit --no-fund
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile) ^[[36;1mnpm ci --no-audit --no-fund^[[0m
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile) shell: /usr/bin/bash -e {0}
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile) env:
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile)   APP_DIR: plataforma-guia-implementacion
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile)   TRIVY_VERSION: v0.76.2
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile) ##[endgroup]
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile) 
+Build, lint y pruebas (Node 22)	Instalación de dependencias (npm ci, reproducible desde el lockfile) added 80 packages in 1s
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ tests 43
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ pass 43
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ fail 0
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ  server.js |  82.11 |    68.78 |   95.24 | 47-55 157-159 162-164 182 205-210 220 239-240 247-248 297-300 304-317 332-335 343-344 370-375 377-389 391-392 427-428 445-451 465-466 495-501
+Build, lint y pruebas (Node 22)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ all files  |  82.11 |    68.78 |   95.24 | 
+Seguridad del repositorio (Trivy + npm audit)	Gate — npm audit (nivel high) found 0 vulnerabilities
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile) ##[group]Run npm ci --no-audit --no-fund
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile) ^[[36;1mnpm ci --no-audit --no-fund^[[0m
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile) shell: /usr/bin/bash -e {0}
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile) env:
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile)   APP_DIR: plataforma-guia-implementacion
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile)   TRIVY_VERSION: v0.76.2
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile) ##[endgroup]
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile) 
+Build, lint y pruebas (Node 24)	Instalación de dependencias (npm ci, reproducible desde el lockfile) added 80 packages in 2s
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ tests 43
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ pass 43
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ fail 0
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ  server.js |  82.11 |    68.78 |   95.24 | 47-55 157-159 162-164 182 205-210 220 239-240 247-248 297-300 304-317 332-335 343-344 370-375 377-389 391-392 427-428 445-451 465-466 495-501
+Build, lint y pruebas (Node 24)	Ejecución de pruebas con cobertura (umbral 70 % de líneas) ℹ all files  |  82.11 |    68.78 |   95.24 | 
+Imagen Docker (build, smoke test y Trivy)	Construir imagen (etapa runtime) ^[[36;1mdocker image inspect "$IMAGE" --format 'Tamaño: {{.Size}} bytes · Usuario: {{.Config.User}}'^[[0m
+Imagen Docker (build, smoke test y Trivy)	Construir imagen (etapa runtime) Tamaño: 62963661 bytes · Usuario: node
+Imagen Docker (build, smoke test y Trivy)	Prueba de humo (health, usuario no root, código del servidor protegido) ^[[36;1mcurl -sf http://localhost:8080/api/health | grep -q '"ok":true'^[[0m
+Imagen Docker (build, smoke test y Trivy)	Prueba de humo (health, usuario no root, código del servidor protegido) ^[[36;1mecho "Smoke test OK"^[[0m
+Imagen Docker (build, smoke test y Trivy)	Prueba de humo (health, usuario no root, código del servidor protegido) {"ok":true,"auth":true,"encrypted":true}
+Imagen Docker (build, smoke test y Trivy)	Prueba de humo (health, usuario no root, código del servidor protegido) Smoke test OK
+Calidad (SonarCloud)	Aviso — SonarCloud no configurado ##[group]Run echo "::warning::SONAR_TOKEN no configurado; análisis SonarCloud omitido (el análisis estático con ESLint sí se ejecutó)."
+Calidad (SonarCloud)	Aviso — SonarCloud no configurado ^[[36;1mecho "::warning::SONAR_TOKEN no configurado; análisis SonarCloud omitido (el análisis estático con ESLint sí se ejecutó)."^[[0m
+Calidad (SonarCloud)	Aviso — SonarCloud no configurado ##[warning]SONAR_TOKEN no configurado; análisis SonarCloud omitido (el análisis estático con ESLint sí se ejecutó).

@@ -1,0 +1,45 @@
+# Trivy 0.76.2 · config k8s/ · LOW..CRITICAL
+
+Report Summary
+
+┌──────────────────────┬────────────┬───────────────────┐
+│        Target        │    Type    │ Misconfigurations │
+├──────────────────────┼────────────┼───────────────────┤
+│ base/deployment.yaml │ kubernetes │         2         │
+├──────────────────────┼────────────┼───────────────────┤
+│ base/namespace.yaml  │ kubernetes │         0         │
+└──────────────────────┴────────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+base/deployment.yaml (kubernetes)
+=================================
+Tests: 101 (SUCCESSES: 99, FAILURES: 2)
+Failures: 2 (LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+KSV-0020 (LOW): Container 'app' of Deployment 'plataforma-guia' should set 'securityContext.runAsUser' > 10000
+════════════════════════════════════════
+Force the container to run with user ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0020
+────────────────────────────────────────
+ base/deployment.yaml:43-78
+────────────────────────────────────────
+  ..   
+────────────────────────────────────────
+
+
+KSV-0021 (LOW): Container 'app' of Deployment 'plataforma-guia' should set 'securityContext.runAsGroup' > 10000
+════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0021
+────────────────────────────────────────
+ base/deployment.yaml:43-78
+────────────────────────────────────────
+  ..   
+────────────────────────────────────────
+
+

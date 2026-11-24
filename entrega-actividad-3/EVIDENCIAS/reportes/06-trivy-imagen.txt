@@ -1,0 +1,14 @@
+# Trivy 0.76.2 · image plataforma-guia:local · HIGH,CRITICAL
+
+Report Summary
+
+┌───────────────────────────────────────┬────────┬─────────────────┬─────────┐
+│                Target                 │  Type  │ Vulnerabilities │ Secrets │
+├───────────────────────────────────────┼────────┼─────────────────┼─────────┤
+│ plataforma-guia:local (alpine 3.24.4) │ alpine │        0        │    -    │
+└───────────────────────────────────────┴────────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+Código de salida real con --exit-code 1: 0 (sin hallazgos HIGH/CRITICAL)

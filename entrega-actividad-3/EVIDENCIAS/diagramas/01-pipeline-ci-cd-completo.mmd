@@ -1,0 +1,32 @@
+flowchart TD
+    DEV([Desarrollador]) -->|commit en rama| BR[Rama de trabajo]
+    BR -->|git push| GH[(GitHub · seguimiento-facilitadores-cicd)]
+    BR -->|pull request a main| PR[Pull request]
+    PR --> GH
+
+    GH -- "push · pull_request" --> CI
+    subgraph CI["CI · GitHub Actions · ci.yml"]
+      direction TB
+      BT["build-test · matriz Node 22 / 24<br/>checkout → npm ci → check:syntax →<br/>ESLint → 43 pruebas + cobertura ≥ 70 % → LCOV"]
+      SEC["security<br/>Trivy fs → SARIF · gate secretos ·<br/>gate HIGH/CRITICAL deps + Dockerfile · npm audit"]
+      DK["docker · needs build-test<br/>build runtime → smoke test →<br/>gate Trivy imagen → SBOM"]
+      SQ["sonar · needs build-test<br/>SonarCloud + Quality Gate<br/>(solo si existe SONAR_TOKEN)"]
+      BT --> DK
+      BT --> SQ
+    end
+    CI -->|checks verdes| MERGE{¿Fusionar PR?}
+    MERGE -->|sí| MAIN[(main)]
+
+    MAIN -- "pollSCM H/5 · o ejecución manual" --> CD
+    subgraph CD["CD · Jenkins · Jenkinsfile"]
+      direction TB
+      J1[1 Clonar repositorio] --> J2[2 Validar · docker build --target test]
+      J2 --> J3[3 Construir imagen Docker · runtime]
+      J3 --> J4[4 Prueba de humo del contenedor]
+      J4 --> J5[5 Escaneo Trivy + SBOM · gate]
+      J5 --> J6[6 Publicar imagen en el registro]
+      J6 -.DEPLOY_TARGET=kubernetes.-> J7[7 Desplegar · kustomize + rollout status]
+      J7 -.fallo tras iniciar.-> RB[post: rollout undo]
+    end
+    J6 --> REG[(Registro OCI<br/>localhost:5000 · Docker Hub · GHCR)]
+    REG -.-> K8S[(Kubernetes · namespace seguimiento)]

@@ -1,0 +1,18 @@
+# actionlint 1.7.12 (.github/workflows/ci.yml)
+Resultado: 0 hallazgos (exit 0)
+
+# hadolint v2.14.0 (plataforma-guia-implementacion/Dockerfile)
+Resultado: 0 hallazgos (exit 0)
+
+# hadolint v2.14.0 (jenkins/Dockerfile)
+Resultado: 0 hallazgos (exit 0)
+
+# kubeconform v0.7.0 -strict (k8s/base)
+Summary: 5 resources found in 2 files - Valid: 5, Invalid: 0, Errors: 0, Skipped: 0
+
+# kubectl kustomize k8s/base
+Resultado: renderiza sin errores
+
+# docker compose config -q (app y jenkins)
+app/compose.yaml válido
+jenkins/compose.yaml válido

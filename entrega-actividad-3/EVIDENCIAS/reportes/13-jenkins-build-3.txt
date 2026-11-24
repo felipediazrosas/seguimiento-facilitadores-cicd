@@ -1,0 +1,1512 @@
+# Jenkins · job plataforma-guia-cd · build #3
+{"_class":"org.jenkinsci.plugins.workflow.job.WorkflowRun","duration":47229,"number":3,"result":"FAILURE","timestamp":1795560884796}
+
+Started by user admin
+Obtained Jenkinsfile from git https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/plataforma-guia-cd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/plataforma-guia-cd/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git # timeout=10
+Fetching upstream changes from https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 9b1ea5698736430172e0ae15eb7c2defc172b24f (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 9b1ea5698736430172e0ae15eb7c2defc172b24f # timeout=10
+Commit message: "feat: pipeline CI (GitHub Actions) y CD (Jenkins) para la plataforma"
+ > git rev-list --no-walk 9b1ea5698736430172e0ae15eb7c2defc172b24f # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-11-24T22:54:46.578Z] Timeout set to expire in 30 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clonar repositorio)
+[Pipeline] checkout
+[2026-11-24T22:54:46.657Z] Selected Git installation does not exist. Using Default
+[2026-11-24T22:54:46.657Z] The recommended git tool is: NONE
+[2026-11-24T22:54:46.657Z] No credentials specified
+[2026-11-24T22:54:46.658Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/plataforma-guia-cd/.git # timeout=10
+[2026-11-24T22:54:46.660Z] Fetching changes from the remote Git repository
+[2026-11-24T22:54:46.662Z]  > git config remote.origin.url https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git # timeout=10
+[2026-11-24T22:54:46.665Z] Fetching upstream changes from https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+[2026-11-24T22:54:46.665Z]  > git --version # timeout=10
+[2026-11-24T22:54:46.667Z]  > git --version # 'git version 2.47.3'
+[2026-11-24T22:54:46.668Z]  > git fetch --tags --force --progress -- https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-11-24T22:54:47.431Z]  > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+[2026-11-24T22:54:47.438Z] Checking out Revision 9b1ea5698736430172e0ae15eb7c2defc172b24f (refs/remotes/origin/main)
+[2026-11-24T22:54:47.439Z]  > git config core.sparsecheckout # timeout=10
+[2026-11-24T22:54:47.443Z]  > git checkout -f 9b1ea5698736430172e0ae15eb7c2defc172b24f # timeout=10
+[2026-11-24T22:54:47.450Z] Commit message: "feat: pipeline CI (GitHub Actions) y CD (Jenkins) para la plataforma"
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-11-24T22:54:47.767Z] + git rev-parse --short=12 HEAD
+[Pipeline] sh
+[2026-11-24T22:54:48.060Z] + git rev-parse HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-24T22:54:48.446Z] + git log -1 --format=Commit %H · %an · %s
+[2026-11-24T22:54:48.446Z] Commit 9b1ea5698736430172e0ae15eb7c2defc172b24f · Luis Felipe Diaz Rosas · feat: pipeline CI (GitHub Actions) y CD (Jenkins) para la plataforma
+[Pipeline] echo
+[2026-11-24T22:54:48.485Z] Imagen a construir: localhost:5999/plataforma-guia:9b1ea5698736-b3
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Validar (lint + pruebas))
+[Pipeline] sh
+[2026-11-24T22:54:48.820Z] + docker build --target test -t plataforma-guia:test-9b1ea5698736-b3 plataforma-guia-implementacion
+[2026-11-24T22:54:49.372Z] #0 building with "default" instance using docker driver
+[2026-11-24T22:54:49.372Z] 
+[2026-11-24T22:54:49.372Z] #1 [internal] load build definition from Dockerfile
+[2026-11-24T22:54:49.372Z] #1 transferring dockerfile: 2.60kB done
+[2026-11-24T22:54:49.372Z] #1 DONE 0.0s
+[2026-11-24T22:54:49.372Z] 
+[2026-11-24T22:54:49.372Z] #2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+[2026-11-24T22:54:49.623Z] #2 DONE 0.6s
+[2026-11-24T22:54:49.874Z] 
+[2026-11-24T22:54:49.874Z] #3 docker-image://docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
+[2026-11-24T22:54:49.874Z] #3 resolve docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183 0.0s done
+[2026-11-24T22:54:49.874Z] #3 CACHED
+[2026-11-24T22:54:49.874Z] 
+[2026-11-24T22:54:49.874Z] #4 [internal] load metadata for docker.io/library/node:24-alpine
+[2026-11-24T22:54:50.125Z] #4 DONE 0.4s
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #5 [internal] load .dockerignore
+[2026-11-24T22:54:50.376Z] #5 transferring context: 286B done
+[2026-11-24T22:54:50.376Z] #5 DONE 0.0s
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #6 [test 1/6] FROM docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+[2026-11-24T22:54:50.376Z] #6 resolve docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.0s done
+[2026-11-24T22:54:50.376Z] #6 DONE 0.0s
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #7 [internal] load build context
+[2026-11-24T22:54:50.376Z] #7 transferring context: 82.69kB 0.0s done
+[2026-11-24T22:54:50.376Z] #7 DONE 0.0s
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #8 [test 2/6] WORKDIR /app
+[2026-11-24T22:54:50.376Z] #8 CACHED
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #9 [test 3/6] COPY package.json package-lock.json ./
+[2026-11-24T22:54:50.376Z] #9 CACHED
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #10 [test 4/6] RUN npm ci --no-audit --no-fund
+[2026-11-24T22:54:50.376Z] #10 CACHED
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #11 [test 5/6] COPY . .
+[2026-11-24T22:54:50.376Z] #11 CACHED
+[2026-11-24T22:54:50.376Z] 
+[2026-11-24T22:54:50.376Z] #12 [test 6/6] RUN npm run lint && npm test
+[2026-11-24T22:54:50.627Z] #12 CACHED
+[2026-11-24T22:54:50.627Z] 
+[2026-11-24T22:54:50.627Z] #13 exporting to image
+[2026-11-24T22:54:50.627Z] #13 exporting layers done
+[2026-11-24T22:54:50.627Z] #13 exporting manifest sha256:c967b87cef7aa107a4481a1e90ace2b0e07f69920210d3033d515c4fd794c488 done
+[2026-11-24T22:54:50.627Z] #13 exporting config sha256:1f19183418305c7bfd00bba3f66903fa291e52e3d646978a83eb57f94c4a74b9 done
+[2026-11-24T22:54:50.627Z] #13 exporting attestation manifest sha256:0f57e881e1bbefdbdd1f2c58eeccbd8761ca572bb805de5da60cd8aeea7ac222 0.0s done
+[2026-11-24T22:54:50.627Z] #13 exporting manifest list sha256:c5d043ae5e31bae7555d6b40b206e77782cbc046a61ea21f67c3064f9313ccd6 0.0s done
+[2026-11-24T22:54:50.627Z] #13 naming to docker.io/library/plataforma-guia:test-9b1ea5698736-b3 done
+[2026-11-24T22:54:50.627Z] #13 unpacking to docker.io/library/plataforma-guia:test-9b1ea5698736-b3
+[2026-11-24T22:54:50.878Z] #13 unpacking to docker.io/library/plataforma-guia:test-9b1ea5698736-b3 0.4s done
+[2026-11-24T22:54:50.878Z] #13 DONE 0.5s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Construir imagen Docker)
+[Pipeline] sh
+[2026-11-24T22:54:51.218Z] + docker build --target runtime --build-arg APP_VERSION=9b1ea5698736-b3 --build-arg VCS_REF=9b1ea5698736430172e0ae15eb7c2defc172b24f -t localhost:5999/plataforma-guia:9b1ea5698736-b3 plataforma-guia-implementacion
+[2026-11-24T22:54:51.469Z] #0 building with "default" instance using docker driver
+[2026-11-24T22:54:51.469Z] 
+[2026-11-24T22:54:51.469Z] #1 [internal] load build definition from Dockerfile
+[2026-11-24T22:54:51.469Z] #1 transferring dockerfile: 2.60kB done
+[2026-11-24T22:54:51.469Z] #1 DONE 0.0s
+[2026-11-24T22:54:51.469Z] 
+[2026-11-24T22:54:51.469Z] #2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+[2026-11-24T22:54:51.469Z] #2 DONE 0.2s
+[2026-11-24T22:54:51.720Z] 
+[2026-11-24T22:54:51.720Z] #3 docker-image://docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
+[2026-11-24T22:54:51.720Z] #3 resolve docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183 0.0s done
+[2026-11-24T22:54:51.720Z] #3 CACHED
+[2026-11-24T22:54:51.720Z] 
+[2026-11-24T22:54:51.720Z] #4 [internal] load metadata for docker.io/library/node:24-alpine
+[2026-11-24T22:54:51.970Z] #4 DONE 0.2s
+[2026-11-24T22:54:51.970Z] 
+[2026-11-24T22:54:51.970Z] #5 [internal] load .dockerignore
+[2026-11-24T22:54:51.970Z] #5 transferring context: 286B 0.0s done
+[2026-11-24T22:54:51.970Z] #5 DONE 0.0s
+[2026-11-24T22:54:51.970Z] 
+[2026-11-24T22:54:51.970Z] #6 [internal] load build context
+[2026-11-24T22:54:51.970Z] #6 transferring context: 536B done
+[2026-11-24T22:54:51.970Z] #6 DONE 0.0s
+[2026-11-24T22:54:51.970Z] 
+[2026-11-24T22:54:51.970Z] #7 [runtime 1/8] FROM docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+[2026-11-24T22:54:51.970Z] #7 resolve docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.0s done
+[2026-11-24T22:54:51.970Z] #7 CACHED
+[2026-11-24T22:54:52.221Z] 
+[2026-11-24T22:54:52.221Z] #8 [runtime 2/8] RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack            /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack            /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg  && mkdir -p /data && chown node:node /data
+[2026-11-24T22:54:52.472Z] #8 DONE 0.5s
+[2026-11-24T22:54:52.472Z] 
+[2026-11-24T22:54:52.472Z] #9 [runtime 3/8] WORKDIR /app
+[2026-11-24T22:54:52.472Z] #9 DONE 0.0s
+[2026-11-24T22:54:52.472Z] 
+[2026-11-24T22:54:52.472Z] #10 [runtime 4/8] COPY index.html ./
+[2026-11-24T22:54:52.472Z] #10 DONE 0.0s
+[2026-11-24T22:54:52.472Z] 
+[2026-11-24T22:54:52.472Z] #11 [runtime 5/8] COPY css/ ./css/
+[2026-11-24T22:54:52.472Z] #11 DONE 0.0s
+[2026-11-24T22:54:52.472Z] 
+[2026-11-24T22:54:52.472Z] #12 [runtime 6/8] COPY js/ ./js/
+[2026-11-24T22:54:52.472Z] #12 DONE 0.0s
+[2026-11-24T22:54:52.723Z] 
+[2026-11-24T22:54:52.723Z] #13 [runtime 7/8] COPY vendor/ ./vendor/
+[2026-11-24T22:54:52.723Z] #13 DONE 0.0s
+[2026-11-24T22:54:52.723Z] 
+[2026-11-24T22:54:52.723Z] #14 [runtime 8/8] COPY server/ ./server/
+[2026-11-24T22:54:52.723Z] #14 DONE 0.0s
+[2026-11-24T22:54:52.723Z] 
+[2026-11-24T22:54:52.723Z] #15 exporting to image
+[2026-11-24T22:54:52.723Z] #15 exporting layers
+[2026-11-24T22:54:52.974Z] #15 exporting layers 0.2s done
+[2026-11-24T22:54:52.974Z] #15 exporting manifest sha256:c55eb24b657f44b17e6d0e96f7047f6963944cc9245e5725d06aec25520fc0a7 0.0s done
+[2026-11-24T22:54:52.974Z] #15 exporting config sha256:f6c4a452daafb94242f7b8c52ad38a9aaba9d547d47822a29c47409449bd66b7 0.0s done
+[2026-11-24T22:54:52.974Z] #15 exporting attestation manifest sha256:1cd29b6d694c0658579f10e18164140cb3ad84028610b0e00815f6d3af7e563f 0.0s done
+[2026-11-24T22:54:52.974Z] #15 exporting manifest list sha256:0f7c0012b24351c2d7203a34bfbc22aebe49175649a0ef8c1bef70434de4fdc3 0.0s done
+[2026-11-24T22:54:52.974Z] #15 naming to localhost:5999/plataforma-guia:9b1ea5698736-b3 done
+[2026-11-24T22:54:52.974Z] #15 unpacking to localhost:5999/plataforma-guia:9b1ea5698736-b3 0.1s done
+[2026-11-24T22:54:53.225Z] #15 DONE 0.4s
+[2026-11-24T22:54:53.225Z] + docker image inspect localhost:5999/plataforma-guia:9b1ea5698736-b3 --format Imagen {{index .RepoTags 0}} · {{.Size}} bytes · usuario {{.Config.User}} · revisión {{index .Config.Labels "org.opencontainers.image.revision"}}
+[2026-11-24T22:54:53.225Z] Imagen localhost:5999/plataforma-guia:9b1ea5698736-b3 · 62963683 bytes · usuario node · revisión 9b1ea5698736430172e0ae15eb7c2defc172b24f
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Prueba de humo del contenedor)
+[Pipeline] sh
+[2026-11-24T22:54:53.583Z] + SMOKE=smoke-jenkins-plataforma-guia-cd-3
+[2026-11-24T22:54:53.583Z] + od -An -N16 -tx1 /dev/urandom
+[2026-11-24T22:54:53.583Z] + tr -d  \n
+[2026-11-24T22:54:53.583Z] + SMOKE_KEY=<REDACTADO: clave efímera impresa por set -x; corregido en el commit siguiente>
+[2026-11-24T22:54:53.583Z] + docker run -d --name smoke-jenkins-plataforma-guia-cd-3 --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges:true -e DATA_KEY=<REDACTADO: clave efímera impresa por set -x; corregido en el commit siguiente> -e ADMIN_USER=smoke -e ADMIN_PASS=<REDACTADO: clave efímera impresa por set -x; corregido en el commit siguiente> localhost:5999/plataforma-guia:9b1ea5698736-b3
+[2026-11-24T22:54:53.583Z] 9ce513de5c559fe9bfdf49c5e476fe9a5fb4967cea28c7340dca610fa480cd52
+[2026-11-24T22:54:53.834Z] + seq 1 30
+[2026-11-24T22:54:53.834Z] + docker exec smoke-jenkins-plataforma-guia-cd-3 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T22:54:53.834Z] + sleep 1
+[2026-11-24T22:54:54.746Z] + docker exec smoke-jenkins-plataforma-guia-cd-3 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T22:54:54.997Z] {"ok":true,"auth":true,"encrypted":true}+ echo
+[2026-11-24T22:54:54.997Z] 
+[2026-11-24T22:54:54.997Z] + break
+[2026-11-24T22:54:54.997Z] + docker exec smoke-jenkins-plataforma-guia-cd-3 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T22:54:54.997Z] + grep -q "ok":true
+[2026-11-24T22:54:54.997Z] + docker exec smoke-jenkins-plataforma-guia-cd-3 id -u
+[2026-11-24T22:54:54.997Z] + test 1000 != 0
+[2026-11-24T22:54:54.997Z] + echo Prueba de humo OK: /api/health responde y el proceso no corre como root
+[2026-11-24T22:54:54.997Z] Prueba de humo OK: /api/health responde y el proceso no corre como root
+Post stage
+[Pipeline] sh
+[2026-11-24T22:54:55.294Z] + docker rm -f smoke-jenkins-plataforma-guia-cd-3
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Escaneo de seguridad (Trivy))
+[Pipeline] sh
+[2026-11-24T22:54:55.903Z] + TRIVY=docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2
+[2026-11-24T22:54:55.903Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --severity HIGH,CRITICAL --format table localhost:5999/plataforma-guia:9b1ea5698736-b3
+[2026-11-24T22:54:58.387Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --format cyclonedx localhost:5999/plataforma-guia:9b1ea5698736-b3
+[2026-11-24T22:55:00.872Z] + cat trivy-imagen.txt
+[2026-11-24T22:55:00.872Z] 
+[2026-11-24T22:55:00.872Z] Report Summary
+[2026-11-24T22:55:00.872Z] 
+[2026-11-24T22:55:00.872Z] ┌────────────────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+[2026-11-24T22:55:00.872Z] │                             Target                             │  Type  │ Vulnerabilities │ Secrets │
+[2026-11-24T22:55:00.872Z] ├────────────────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+[2026-11-24T22:55:00.872Z] │ localhost:5999/plataforma-guia:9b1ea5698736-b3 (alpine 3.24.4) │ alpine │        0        │    -    │
+[2026-11-24T22:55:00.872Z] └────────────────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+[2026-11-24T22:55:00.872Z] Legend:
+[2026-11-24T22:55:00.872Z] - '-': Not scanned
+[2026-11-24T22:55:00.872Z] - '0': Clean (no security findings detected)
+[2026-11-24T22:55:00.872Z] 
+[2026-11-24T22:55:00.872Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 localhost:5999/plataforma-guia:9b1ea5698736-b3
+[2026-11-24T22:55:00.872Z] 
+[2026-11-24T22:55:00.872Z] Report Summary
+[2026-11-24T22:55:00.872Z] 
+[2026-11-24T22:55:00.872Z] ┌────────────────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+[2026-11-24T22:55:00.872Z] │                             Target                             │  Type  │ Vulnerabilities │ Secrets │
+[2026-11-24T22:55:00.872Z] ├────────────────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+[2026-11-24T22:55:00.872Z] │ localhost:5999/plataforma-guia:9b1ea5698736-b3 (alpine 3.24.4) │ alpine │        0        │    -    │
+[2026-11-24T22:55:00.872Z] └────────────────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+[2026-11-24T22:55:00.872Z] Legend:
+[2026-11-24T22:55:00.872Z] - '-': Not scanned
+[2026-11-24T22:55:00.872Z] - '0': Clean (no security findings detected)
+[2026-11-24T22:55:00.872Z] 
+Post stage
+[Pipeline] archiveArtifacts
+[2026-11-24T22:55:00.905Z] Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publicar imagen en el registro)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-11-24T22:55:01.026Z] Registro sin autenticación: localhost:5999
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-24T22:55:01.320Z] + docker push localhost:5999/plataforma-guia:9b1ea5698736-b3
+[2026-11-24T22:55:01.320Z] The push refers to repository [localhost:5999/plataforma-guia]
+[2026-11-24T22:55:01.320Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:01.320Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:01.320Z] 86781d25d398: Waiting
+[2026-11-24T22:55:01.320Z] 881fc932939e: Waiting
+[2026-11-24T22:55:01.320Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:01.320Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:01.320Z] 86781d25d398: Waiting
+[2026-11-24T22:55:01.320Z] 881fc932939e: Waiting
+[2026-11-24T22:55:01.572Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:01.572Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:01.572Z] 86781d25d398: Waiting
+[2026-11-24T22:55:01.572Z] 881fc932939e: Waiting
+[2026-11-24T22:55:01.572Z] 881fc932939e: Waiting
+[2026-11-24T22:55:01.572Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:01.572Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:01.572Z] 86781d25d398: Waiting
+[2026-11-24T22:55:01.823Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:01.823Z] 86781d25d398: Waiting
+[2026-11-24T22:55:01.823Z] 881fc932939e: Waiting
+[2026-11-24T22:55:01.823Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:01.823Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:01.823Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:01.823Z] 86781d25d398: Waiting
+[2026-11-24T22:55:01.823Z] 881fc932939e: Waiting
+[2026-11-24T22:55:01.823Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:01.823Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:01.823Z] 86781d25d398: Waiting
+[2026-11-24T22:55:01.823Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.074Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.074Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.074Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.074Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.074Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.074Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.074Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.074Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.325Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.325Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.325Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.325Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.325Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.325Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.325Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.325Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.325Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.325Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.325Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.325Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.577Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.577Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.577Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.577Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.577Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.577Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.577Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.577Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.829Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.829Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.829Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.829Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.829Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.829Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.829Z] 881fc932939e: Waiting
+[2026-11-24T22:55:02.829Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.829Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:02.829Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:02.829Z] 86781d25d398: Waiting
+[2026-11-24T22:55:02.829Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.080Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.080Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.080Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.080Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.080Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.080Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.080Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.080Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.331Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.331Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.331Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.331Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.331Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.331Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.331Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.331Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.331Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.331Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.331Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.331Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.582Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.582Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.582Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.582Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.582Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.582Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.582Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.582Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.833Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.833Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.833Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.833Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.833Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.833Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.833Z] 86781d25d398: Waiting
+[2026-11-24T22:55:03.833Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.833Z] 881fc932939e: Waiting
+[2026-11-24T22:55:03.833Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:03.833Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:03.833Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.085Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.085Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.085Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.085Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.085Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.085Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.085Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.085Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.336Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.336Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.336Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.336Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.336Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.336Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.336Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.336Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.336Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.336Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.336Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.336Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.587Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.587Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.587Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.587Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.587Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.587Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.587Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.587Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.838Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.838Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.838Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.838Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.838Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.838Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.838Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.838Z] 881fc932939e: Waiting
+[2026-11-24T22:55:04.838Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:04.838Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:04.838Z] 86781d25d398: Waiting
+[2026-11-24T22:55:04.838Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.089Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.089Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.089Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.089Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.089Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.089Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.089Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.090Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.341Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.341Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.341Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.341Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.341Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.341Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.341Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.341Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.341Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.341Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.341Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.341Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.592Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.592Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.592Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.592Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.592Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.592Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.592Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.592Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.844Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.844Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.844Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.844Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.844Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.844Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.844Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.844Z] 881fc932939e: Waiting
+[2026-11-24T22:55:05.844Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:05.844Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:05.844Z] 86781d25d398: Waiting
+[2026-11-24T22:55:05.844Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.095Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.095Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.095Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.095Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.095Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.095Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.095Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.095Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.347Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.347Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.347Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.347Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.347Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.347Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.347Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.347Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.347Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.347Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.347Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.347Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.598Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.598Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.598Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.598Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.598Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.598Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.598Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.598Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.598Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.598Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.598Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.598Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.846Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.846Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.846Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.846Z] 881fc932939e: Waiting
+[2026-11-24T22:55:06.846Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:06.846Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:06.846Z] 86781d25d398: Waiting
+[2026-11-24T22:55:06.846Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.097Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.097Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.097Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.097Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.097Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.097Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.097Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.097Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.097Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.097Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.097Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.097Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.349Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.349Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.349Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.349Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.349Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.349Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.349Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.349Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.600Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.600Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.600Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.600Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.600Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.600Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.600Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.600Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.600Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.600Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.600Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.600Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.851Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.851Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.851Z] 86781d25d398: Waiting
+[2026-11-24T22:55:07.851Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.851Z] 881fc932939e: Waiting
+[2026-11-24T22:55:07.851Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:07.851Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:07.851Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.102Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.102Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.102Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.102Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.102Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.102Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.102Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.102Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.102Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.102Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.102Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.102Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.354Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.354Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.354Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.354Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.354Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.354Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.354Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.354Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.606Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.606Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.606Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.606Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.606Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.606Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.606Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.606Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.606Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.606Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.606Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.606Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.857Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.857Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.857Z] 881fc932939e: Waiting
+[2026-11-24T22:55:08.857Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.857Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:08.857Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:08.857Z] 86781d25d398: Waiting
+[2026-11-24T22:55:08.857Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.108Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.108Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.108Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.108Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.108Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.108Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.108Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.108Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.108Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.108Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.108Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.108Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.360Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.360Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.360Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.360Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.360Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.360Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.360Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.360Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.611Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.611Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.611Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.611Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.611Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.611Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.611Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.611Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.611Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.611Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.611Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.611Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.863Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.863Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.863Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.863Z] 881fc932939e: Waiting
+[2026-11-24T22:55:09.863Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:09.863Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:09.863Z] 86781d25d398: Waiting
+[2026-11-24T22:55:09.863Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.114Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.114Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.114Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.114Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.114Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.114Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.114Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.114Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.114Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.114Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.114Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.114Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.366Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.366Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.366Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.366Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.366Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.366Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.366Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.366Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.617Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.617Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.617Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.617Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.617Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.617Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.617Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.617Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.617Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.617Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.617Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.617Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.868Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.869Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.869Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.869Z] 881fc932939e: Waiting
+[2026-11-24T22:55:10.869Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:10.869Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:10.869Z] 86781d25d398: Waiting
+[2026-11-24T22:55:10.869Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.120Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.120Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.120Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.120Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.120Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.120Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.120Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.120Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.120Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.120Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.120Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.120Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.372Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.372Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.372Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.372Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.372Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.372Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.372Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.372Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.624Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.624Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.624Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.624Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.624Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.624Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.624Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.624Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.624Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.624Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.624Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.624Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.876Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.876Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.876Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.876Z] 881fc932939e: Waiting
+[2026-11-24T22:55:11.876Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:11.876Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:11.876Z] 86781d25d398: Waiting
+[2026-11-24T22:55:11.876Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.129Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.129Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.129Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.129Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.129Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.129Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.129Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.129Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.129Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.129Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.129Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.129Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.380Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.381Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.381Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.381Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.381Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.381Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.381Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.381Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.632Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.632Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.632Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.632Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.632Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.632Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.632Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.632Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.632Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.632Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.632Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.632Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.883Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.883Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.883Z] 881fc932939e: Waiting
+[2026-11-24T22:55:12.883Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.883Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:12.883Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:12.883Z] 86781d25d398: Waiting
+[2026-11-24T22:55:12.883Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.134Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.134Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.134Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.134Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.134Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.134Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.134Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.134Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.134Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.134Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.134Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.134Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.385Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.385Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.385Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.385Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.385Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.385Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.385Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.385Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.636Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.636Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.636Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.636Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.636Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.636Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.636Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.636Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.636Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.636Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.636Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.636Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.888Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.888Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.888Z] 86781d25d398: Waiting
+[2026-11-24T22:55:13.888Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.888Z] 881fc932939e: Waiting
+[2026-11-24T22:55:13.888Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:13.888Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:13.888Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.139Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.139Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.139Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.139Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.139Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.139Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.139Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.139Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.139Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.139Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.139Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.139Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.390Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.390Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.390Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.390Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.390Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.390Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.390Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.390Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.641Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.642Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.642Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.642Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.642Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.642Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.642Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.642Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.642Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.642Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.642Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.642Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.892Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.892Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:14.892Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.892Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.892Z] 86781d25d398: Waiting
+[2026-11-24T22:55:14.892Z] 881fc932939e: Waiting
+[2026-11-24T22:55:14.892Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:14.892Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.143Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.143Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.144Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.144Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.144Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.144Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.144Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.144Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.144Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.144Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.144Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.144Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.394Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.394Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.394Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.394Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.394Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.394Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.394Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.394Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.646Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.646Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.646Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.646Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.646Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.646Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.646Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.646Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.646Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.646Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.646Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.646Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.897Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.897Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.897Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.897Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.897Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.897Z] 86781d25d398: Waiting
+[2026-11-24T22:55:15.897Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.897Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.897Z] 881fc932939e: Waiting
+[2026-11-24T22:55:15.897Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:15.897Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:15.897Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.148Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.148Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.148Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.148Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.148Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.148Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.148Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.148Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.399Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.399Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.399Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.399Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.399Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.399Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.399Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.399Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.399Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.399Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.399Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.399Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.651Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.651Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.651Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.651Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.651Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.651Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.651Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.651Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.902Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.902Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.902Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.902Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.902Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.902Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.902Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.902Z] 881fc932939e: Waiting
+[2026-11-24T22:55:16.902Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:16.902Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:16.902Z] 86781d25d398: Waiting
+[2026-11-24T22:55:16.902Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.154Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.154Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.154Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.154Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.154Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.154Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.154Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.154Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.405Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.405Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.405Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.405Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.405Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.405Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.405Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.405Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.405Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.405Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.405Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.405Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.656Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.656Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.656Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.656Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.656Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.656Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.656Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.656Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.908Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.908Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.908Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.908Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.908Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.908Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.908Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.908Z] 881fc932939e: Waiting
+[2026-11-24T22:55:17.908Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:17.908Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:17.908Z] 86781d25d398: Waiting
+[2026-11-24T22:55:17.908Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.159Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.159Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.159Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.159Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.159Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.159Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.159Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.159Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.411Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.411Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.411Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.411Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.411Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.411Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.411Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.411Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.411Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.411Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.411Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.411Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.662Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.662Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.662Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.662Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.662Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.662Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.662Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.662Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.913Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.913Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.913Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.913Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.913Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.913Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.913Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.913Z] 881fc932939e: Waiting
+[2026-11-24T22:55:18.913Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:18.913Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:18.913Z] 86781d25d398: Waiting
+[2026-11-24T22:55:18.913Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.165Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.165Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.165Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.165Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.165Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.165Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.165Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.165Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.416Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.416Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.416Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.416Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.416Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.416Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.416Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.416Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.416Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.416Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.416Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.416Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.667Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.667Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.667Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.667Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.667Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.667Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.667Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.667Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.918Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.918Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.918Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.918Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.918Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.918Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.918Z] 881fc932939e: Waiting
+[2026-11-24T22:55:19.918Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.918Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:19.918Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:19.918Z] 86781d25d398: Waiting
+[2026-11-24T22:55:19.918Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.170Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.170Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.170Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.170Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.170Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.170Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.170Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.170Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.421Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.421Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.421Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.421Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.421Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.421Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.421Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.421Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.421Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.421Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.421Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.421Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.672Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.672Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.672Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.672Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.672Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.672Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.672Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.672Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.923Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.923Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.923Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.923Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.923Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.923Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.923Z] 86781d25d398: Waiting
+[2026-11-24T22:55:20.923Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.924Z] 881fc932939e: Waiting
+[2026-11-24T22:55:20.924Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:20.924Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:20.924Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.175Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.175Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.175Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.175Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.175Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.175Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.175Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.175Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.426Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.427Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.427Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.427Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.427Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.427Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.427Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.427Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.427Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.427Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.427Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.427Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.678Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.678Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.678Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.678Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.678Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.678Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.678Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.678Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.929Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.929Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.929Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.929Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.929Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.929Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.929Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.929Z] 881fc932939e: Waiting
+[2026-11-24T22:55:21.929Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:21.929Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:21.929Z] 86781d25d398: Waiting
+[2026-11-24T22:55:21.929Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.180Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.180Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.180Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.180Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.180Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.180Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.180Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.180Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.431Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.432Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.432Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.432Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.432Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.432Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.432Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.432Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.432Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.432Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.432Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.432Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.683Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.683Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.683Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.683Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.683Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.683Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.683Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.683Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.934Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.934Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.934Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.934Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.934Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.934Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.934Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.934Z] 881fc932939e: Waiting
+[2026-11-24T22:55:22.934Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:22.934Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:22.934Z] 86781d25d398: Waiting
+[2026-11-24T22:55:22.934Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.186Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.186Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.186Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.186Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.186Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.186Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.186Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.186Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.437Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.437Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.437Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.437Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.437Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.437Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.437Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.437Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.437Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.437Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.437Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.437Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.688Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.688Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.688Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.688Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.688Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.689Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.689Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.689Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.940Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.940Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.940Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.940Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.940Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.940Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.940Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.940Z] 881fc932939e: Waiting
+[2026-11-24T22:55:23.940Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:23.940Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:23.940Z] 86781d25d398: Waiting
+[2026-11-24T22:55:23.940Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.191Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.191Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.191Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.191Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.191Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.191Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.191Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.191Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.443Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.443Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.443Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.443Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.443Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.443Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.443Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.443Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.443Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.443Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.443Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.443Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.694Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.694Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.694Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.694Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.694Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.694Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.694Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.694Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.948Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.948Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.948Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.948Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.948Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.948Z] 881fc932939e: Waiting
+[2026-11-24T22:55:24.948Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.948Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.948Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:24.948Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:24.948Z] 86781d25d398: Waiting
+[2026-11-24T22:55:24.948Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.199Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.199Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.199Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.199Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.199Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.199Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.199Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.199Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.199Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.199Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.199Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.199Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.450Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.450Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.450Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.450Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.450Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.450Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.450Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.450Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.701Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.701Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.701Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.701Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.701Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.701Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.701Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.701Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.701Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.701Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.701Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.701Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.953Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.953Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.953Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.953Z] 881fc932939e: Waiting
+[2026-11-24T22:55:25.953Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:25.953Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:25.953Z] 86781d25d398: Waiting
+[2026-11-24T22:55:25.953Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.204Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.204Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.204Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.204Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.204Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.204Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.204Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.204Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.204Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.204Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.204Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.204Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.455Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.455Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.455Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.455Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.455Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.455Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.455Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.455Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.706Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.706Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.706Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.707Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.707Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.707Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.707Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.707Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.707Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.707Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.707Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.707Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.958Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.958Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.958Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.958Z] 881fc932939e: Waiting
+[2026-11-24T22:55:26.958Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:26.958Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:26.958Z] 86781d25d398: Waiting
+[2026-11-24T22:55:26.958Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.210Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.210Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.210Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.210Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.210Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.211Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.211Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.211Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.211Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.211Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.211Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.211Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.462Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.462Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.462Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.462Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.462Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.462Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.462Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.462Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.714Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.714Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.714Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.714Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.714Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.714Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.714Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.714Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.714Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.714Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.714Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.714Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.965Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.965Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.965Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.965Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:27.965Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:27.965Z] 86781d25d398: Waiting
+[2026-11-24T22:55:27.965Z] 881fc932939e: Waiting
+[2026-11-24T22:55:27.965Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.216Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.216Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.216Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.216Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.216Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.216Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.216Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.216Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.216Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.216Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.216Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.216Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.468Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.468Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.468Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.468Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.468Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.468Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.468Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.468Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.719Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.719Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.719Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.719Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.719Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.719Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.719Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.719Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.719Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.719Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.719Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.719Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.971Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.971Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.971Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.971Z] 881fc932939e: Waiting
+[2026-11-24T22:55:28.971Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:28.971Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:28.971Z] 86781d25d398: Waiting
+[2026-11-24T22:55:28.971Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.222Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.222Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.222Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.222Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.222Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.222Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.222Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.222Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.222Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.222Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.222Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.223Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.474Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.474Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.474Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.474Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.474Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.474Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.474Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.474Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.725Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.725Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.725Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.725Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.725Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.725Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.725Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.725Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.725Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.725Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.725Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.725Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.976Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.976Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.976Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.976Z] 881fc932939e: Waiting
+[2026-11-24T22:55:29.976Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:29.976Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:29.976Z] 86781d25d398: Waiting
+[2026-11-24T22:55:29.976Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.227Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.228Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.228Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.228Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.228Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.228Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.228Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.228Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.228Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.228Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.228Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.228Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.479Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.479Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.479Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.479Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.479Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.479Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.479Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.479Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.730Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.730Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.730Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.730Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.730Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.730Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.730Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.730Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.730Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.730Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.730Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.730Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.981Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.981Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:30.981Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.981Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.981Z] 86781d25d398: Waiting
+[2026-11-24T22:55:30.981Z] 881fc932939e: Waiting
+[2026-11-24T22:55:30.981Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:30.981Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:31.232Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:31.232Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:31.232Z] 86781d25d398: Waiting
+[2026-11-24T22:55:31.232Z] 881fc932939e: Waiting
+[2026-11-24T22:55:31.232Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:31.232Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:31.232Z] 86781d25d398: Waiting
+[2026-11-24T22:55:31.232Z] 881fc932939e: Waiting
+[2026-11-24T22:55:31.232Z] 5a8df7035d66: Waiting
+[2026-11-24T22:55:31.232Z] 44136fa355b3: Waiting
+[2026-11-24T22:55:31.232Z] 86781d25d398: Waiting
+[2026-11-24T22:55:31.232Z] 881fc932939e: Waiting
+[2026-11-24T22:55:31.232Z] failed to do request: Head "https://localhost:5999/v2/plataforma-guia/blobs/sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a": dial tcp [::1]:5999: i/o timeout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Desplegar (Kubernetes))
+Stage "Desplegar (Kubernetes)" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
+[2026-11-24T22:55:31.723Z] + docker image rm -f plataforma-guia:test-9b1ea5698736-b3
+[2026-11-24T22:55:31.723Z] + docker logout localhost:5999
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-11-24T22:55:31.775Z] Fallo previo al despliegue: no se hace rollback (la versión en ejecución sigue intacta).
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE

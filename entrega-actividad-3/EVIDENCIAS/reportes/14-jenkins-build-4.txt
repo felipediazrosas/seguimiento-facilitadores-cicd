@@ -1,0 +1,348 @@
+# Jenkins · job plataforma-guia-cd · build #4 (disparado por pollSCM tras fusionar el PR #1)
+{"_class":"org.jenkinsci.plugins.workflow.job.WorkflowRun","duration":18228,"number":4,"result":"SUCCESS","timestamp":1795561569805}
+
+Started by an SCM change
+Obtained Jenkinsfile from git https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/plataforma-guia-cd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/plataforma-guia-cd/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git # timeout=10
+Fetching upstream changes from https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 62fdfcce921e832e2029d423640776d7a481a1c6 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 62fdfcce921e832e2029d423640776d7a481a1c6 # timeout=10
+Commit message: "fix(cd): ocultar la clave efímera de la prueba de humo en Jenkins (#1)"
+ > git rev-list --no-walk 9b1ea5698736430172e0ae15eb7c2defc172b24f # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-11-24T23:06:11.637Z] Timeout set to expire in 30 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clonar repositorio)
+[Pipeline] checkout
+[2026-11-24T23:06:11.707Z] Selected Git installation does not exist. Using Default
+[2026-11-24T23:06:11.707Z] The recommended git tool is: NONE
+[2026-11-24T23:06:11.707Z] No credentials specified
+[2026-11-24T23:06:11.707Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/plataforma-guia-cd/.git # timeout=10
+[2026-11-24T23:06:11.710Z] Fetching changes from the remote Git repository
+[2026-11-24T23:06:11.711Z]  > git config remote.origin.url https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git # timeout=10
+[2026-11-24T23:06:11.714Z] Fetching upstream changes from https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git
+[2026-11-24T23:06:11.714Z]  > git --version # timeout=10
+[2026-11-24T23:06:11.717Z]  > git --version # 'git version 2.47.3'
+[2026-11-24T23:06:11.717Z]  > git fetch --tags --force --progress -- https://github.com/felipediazrosas/seguimiento-facilitadores-cicd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-11-24T23:06:12.154Z]  > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+[2026-11-24T23:06:12.161Z] Checking out Revision 62fdfcce921e832e2029d423640776d7a481a1c6 (refs/remotes/origin/main)
+[2026-11-24T23:06:12.161Z]  > git config core.sparsecheckout # timeout=10
+[2026-11-24T23:06:12.165Z]  > git checkout -f 62fdfcce921e832e2029d423640776d7a481a1c6 # timeout=10
+[2026-11-24T23:06:12.177Z] Commit message: "fix(cd): ocultar la clave efímera de la prueba de humo en Jenkins (#1)"
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-11-24T23:06:12.497Z] + git rev-parse --short=12 HEAD
+[Pipeline] sh
+[2026-11-24T23:06:12.799Z] + git rev-parse HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-24T23:06:13.156Z] + git log -1 --format=Commit %H · %an · %s
+[2026-11-24T23:06:13.157Z] Commit 62fdfcce921e832e2029d423640776d7a481a1c6 · Felipe Diaz Rosas · fix(cd): ocultar la clave efímera de la prueba de humo en Jenkins (#1)
+[Pipeline] echo
+[2026-11-24T23:06:13.199Z] Imagen a construir: localhost:5000/plataforma-guia:62fdfcce921e-b4
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Validar (lint + pruebas))
+[Pipeline] sh
+[2026-11-24T23:06:13.529Z] + docker build --target test -t plataforma-guia:test-62fdfcce921e-b4 plataforma-guia-implementacion
+[2026-11-24T23:06:13.779Z] #0 building with "default" instance using docker driver
+[2026-11-24T23:06:13.779Z] 
+[2026-11-24T23:06:13.779Z] #1 [internal] load build definition from Dockerfile
+[2026-11-24T23:06:13.779Z] #1 transferring dockerfile: 2.60kB done
+[2026-11-24T23:06:13.779Z] #1 DONE 0.0s
+[2026-11-24T23:06:13.779Z] 
+[2026-11-24T23:06:13.779Z] #2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+[2026-11-24T23:06:15.124Z] #2 DONE 1.2s
+[2026-11-24T23:06:15.124Z] 
+[2026-11-24T23:06:15.124Z] #3 docker-image://docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
+[2026-11-24T23:06:15.124Z] #3 resolve docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183 0.0s done
+[2026-11-24T23:06:15.124Z] #3 CACHED
+[2026-11-24T23:06:15.124Z] 
+[2026-11-24T23:06:15.124Z] #4 [internal] load metadata for docker.io/library/node:24-alpine
+[2026-11-24T23:06:15.676Z] #4 DONE 0.6s
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #5 [internal] load .dockerignore
+[2026-11-24T23:06:15.676Z] #5 transferring context: 286B done
+[2026-11-24T23:06:15.676Z] #5 DONE 0.0s
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #6 [test 1/6] FROM docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+[2026-11-24T23:06:15.676Z] #6 resolve docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.0s done
+[2026-11-24T23:06:15.676Z] #6 DONE 0.0s
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #7 [internal] load build context
+[2026-11-24T23:06:15.676Z] #7 transferring context: 82.69kB 0.0s done
+[2026-11-24T23:06:15.676Z] #7 DONE 0.0s
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #8 [test 2/6] WORKDIR /app
+[2026-11-24T23:06:15.676Z] #8 CACHED
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #9 [test 3/6] COPY package.json package-lock.json ./
+[2026-11-24T23:06:15.676Z] #9 CACHED
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #10 [test 4/6] RUN npm ci --no-audit --no-fund
+[2026-11-24T23:06:15.676Z] #10 CACHED
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #11 [test 5/6] COPY . .
+[2026-11-24T23:06:15.676Z] #11 CACHED
+[2026-11-24T23:06:15.676Z] 
+[2026-11-24T23:06:15.676Z] #12 [test 6/6] RUN npm run lint && npm test
+[2026-11-24T23:06:15.926Z] #12 CACHED
+[2026-11-24T23:06:15.926Z] 
+[2026-11-24T23:06:15.926Z] #13 exporting to image
+[2026-11-24T23:06:15.926Z] #13 exporting layers done
+[2026-11-24T23:06:15.926Z] #13 exporting manifest sha256:c967b87cef7aa107a4481a1e90ace2b0e07f69920210d3033d515c4fd794c488 done
+[2026-11-24T23:06:15.926Z] #13 exporting config sha256:1f19183418305c7bfd00bba3f66903fa291e52e3d646978a83eb57f94c4a74b9 done
+[2026-11-24T23:06:15.926Z] #13 exporting attestation manifest sha256:0940e1ecb5f8ea72c373a46356058bf773e8f5a97bfdeafca9f45046d8aedf7b 0.0s done
+[2026-11-24T23:06:15.926Z] #13 exporting manifest list sha256:30e3a826001e725748eb81253a5fa55498e08372c5d0deceed92f4572cf649d7 done
+[2026-11-24T23:06:15.926Z] #13 naming to docker.io/library/plataforma-guia:test-62fdfcce921e-b4 done
+[2026-11-24T23:06:15.926Z] #13 unpacking to docker.io/library/plataforma-guia:test-62fdfcce921e-b4
+[2026-11-24T23:06:16.177Z] #13 unpacking to docker.io/library/plataforma-guia:test-62fdfcce921e-b4 0.4s done
+[2026-11-24T23:06:16.428Z] #13 DONE 0.5s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Construir imagen Docker)
+[Pipeline] sh
+[2026-11-24T23:06:16.780Z] + docker build --target runtime --build-arg APP_VERSION=62fdfcce921e-b4 --build-arg VCS_REF=62fdfcce921e832e2029d423640776d7a481a1c6 -t localhost:5000/plataforma-guia:62fdfcce921e-b4 plataforma-guia-implementacion
+[2026-11-24T23:06:17.031Z] #0 building with "default" instance using docker driver
+[2026-11-24T23:06:17.031Z] 
+[2026-11-24T23:06:17.031Z] #1 [internal] load build definition from Dockerfile
+[2026-11-24T23:06:17.031Z] #1 transferring dockerfile: 2.60kB done
+[2026-11-24T23:06:17.031Z] #1 DONE 0.0s
+[2026-11-24T23:06:17.031Z] 
+[2026-11-24T23:06:17.031Z] #2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+[2026-11-24T23:06:17.031Z] #2 DONE 0.2s
+[2026-11-24T23:06:17.281Z] 
+[2026-11-24T23:06:17.281Z] #3 docker-image://docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183
+[2026-11-24T23:06:17.281Z] #3 resolve docker.io/docker/dockerfile:1@sha256:572cebbc2b15e6f84c077742952674889cb63cd5e9b80abdffcbe587b6f19183 0.0s done
+[2026-11-24T23:06:17.281Z] #3 CACHED
+[2026-11-24T23:06:17.281Z] 
+[2026-11-24T23:06:17.281Z] #4 [internal] load metadata for docker.io/library/node:24-alpine
+[2026-11-24T23:06:17.281Z] #4 DONE 0.2s
+[2026-11-24T23:06:17.532Z] 
+[2026-11-24T23:06:17.532Z] #5 [internal] load .dockerignore
+[2026-11-24T23:06:17.532Z] #5 transferring context: 286B done
+[2026-11-24T23:06:17.532Z] #5 DONE 0.0s
+[2026-11-24T23:06:17.532Z] 
+[2026-11-24T23:06:17.532Z] #6 [internal] load build context
+[2026-11-24T23:06:17.532Z] #6 transferring context: 536B done
+[2026-11-24T23:06:17.532Z] #6 DONE 0.0s
+[2026-11-24T23:06:17.532Z] 
+[2026-11-24T23:06:17.532Z] #7 [runtime 1/8] FROM docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+[2026-11-24T23:06:17.532Z] #7 resolve docker.io/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.0s done
+[2026-11-24T23:06:17.532Z] #7 CACHED
+[2026-11-24T23:06:17.532Z] 
+[2026-11-24T23:06:17.532Z] #8 [runtime 2/8] RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack            /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack            /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg  && mkdir -p /data && chown node:node /data
+[2026-11-24T23:06:18.083Z] #8 DONE 0.5s
+[2026-11-24T23:06:18.083Z] 
+[2026-11-24T23:06:18.083Z] #9 [runtime 3/8] WORKDIR /app
+[2026-11-24T23:06:18.083Z] #9 DONE 0.0s
+[2026-11-24T23:06:18.083Z] 
+[2026-11-24T23:06:18.083Z] #10 [runtime 4/8] COPY index.html ./
+[2026-11-24T23:06:18.083Z] #10 DONE 0.0s
+[2026-11-24T23:06:18.083Z] 
+[2026-11-24T23:06:18.083Z] #11 [runtime 5/8] COPY css/ ./css/
+[2026-11-24T23:06:18.083Z] #11 DONE 0.0s
+[2026-11-24T23:06:18.083Z] 
+[2026-11-24T23:06:18.083Z] #12 [runtime 6/8] COPY js/ ./js/
+[2026-11-24T23:06:18.083Z] #12 DONE 0.0s
+[2026-11-24T23:06:18.333Z] 
+[2026-11-24T23:06:18.333Z] #13 [runtime 7/8] COPY vendor/ ./vendor/
+[2026-11-24T23:06:18.333Z] #13 DONE 0.0s
+[2026-11-24T23:06:18.333Z] 
+[2026-11-24T23:06:18.333Z] #14 [runtime 8/8] COPY server/ ./server/
+[2026-11-24T23:06:18.333Z] #14 DONE 0.0s
+[2026-11-24T23:06:18.333Z] 
+[2026-11-24T23:06:18.333Z] #15 exporting to image
+[2026-11-24T23:06:18.333Z] #15 exporting layers
+[2026-11-24T23:06:18.334Z] #15 exporting layers 0.2s done
+[2026-11-24T23:06:18.584Z] #15 exporting manifest sha256:e8bc60c889d2e9da7a243213590ceb0e3639cd1efcd8bbecb56313c442cd66a9 done
+[2026-11-24T23:06:18.584Z] #15 exporting config sha256:99763aa71c901a079d52b7d95fbe273177637ac595ce70637ee02e24b6f2441b done
+[2026-11-24T23:06:18.584Z] #15 exporting attestation manifest sha256:a44df2186911d24e4bf2fdcbecfa8824ae98c3e07c1f60f2dbb4a463f4e915ab 0.0s done
+[2026-11-24T23:06:18.584Z] #15 exporting manifest list sha256:f9c30ad2b1bc322200173fa02c4292fea06b4c85d9c2f9fa4c3e350c0919014c done
+[2026-11-24T23:06:18.584Z] #15 naming to localhost:5000/plataforma-guia:62fdfcce921e-b4 done
+[2026-11-24T23:06:18.584Z] #15 unpacking to localhost:5000/plataforma-guia:62fdfcce921e-b4 0.1s done
+[2026-11-24T23:06:18.584Z] #15 DONE 0.4s
+[2026-11-24T23:06:18.584Z] + docker image inspect localhost:5000/plataforma-guia:62fdfcce921e-b4 --format Imagen {{index .RepoTags 0}} · {{.Size}} bytes · usuario {{.Config.User}} · revisión {{index .Config.Labels "org.opencontainers.image.revision"}}
+[2026-11-24T23:06:18.835Z] Imagen localhost:5000/plataforma-guia:62fdfcce921e-b4 · 62963693 bytes · usuario node · revisión 62fdfcce921e832e2029d423640776d7a481a1c6
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Prueba de humo del contenedor)
+[Pipeline] sh
+[2026-11-24T23:06:19.232Z] + SMOKE=smoke-jenkins-plataforma-guia-cd-4
+[2026-11-24T23:06:19.232Z] + set +x
+[2026-11-24T23:06:19.232Z] + docker run -d --name smoke-jenkins-plataforma-guia-cd-4 (DATA_KEY y ADMIN_PASS efímeras, ocultas) localhost:5000/plataforma-guia:62fdfcce921e-b4
+[2026-11-24T23:06:19.232Z] c1592037bd3bb2345c0b420d84bbf428eddc23b91f5f416808819a086732cf1a
+[2026-11-24T23:06:19.483Z] + seq 1 30
+[2026-11-24T23:06:19.483Z] + docker exec smoke-jenkins-plataforma-guia-cd-4 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T23:06:19.483Z] + sleep 1
+[2026-11-24T23:06:20.396Z] + docker exec smoke-jenkins-plataforma-guia-cd-4 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T23:06:20.647Z] {"ok":true,"auth":true,"encrypted":true}+ echo
+[2026-11-24T23:06:20.647Z] 
+[2026-11-24T23:06:20.647Z] + break
+[2026-11-24T23:06:20.647Z] + docker exec smoke-jenkins-plataforma-guia-cd-4 wget -qO- http://127.0.0.1:8080/api/health
+[2026-11-24T23:06:20.647Z] + grep -q "ok":true
+[2026-11-24T23:06:20.647Z] + docker exec smoke-jenkins-plataforma-guia-cd-4 id -u
+[2026-11-24T23:06:20.647Z] + test 1000 != 0
+[2026-11-24T23:06:20.647Z] + echo Prueba de humo OK: /api/health responde y el proceso no corre como root
+[2026-11-24T23:06:20.647Z] Prueba de humo OK: /api/health responde y el proceso no corre como root
+Post stage
+[Pipeline] sh
+[2026-11-24T23:06:20.935Z] + docker rm -f smoke-jenkins-plataforma-guia-cd-4
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Escaneo de seguridad (Trivy))
+[Pipeline] sh
+[2026-11-24T23:06:21.276Z] + TRIVY=docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2
+[2026-11-24T23:06:21.276Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --severity HIGH,CRITICAL --format table localhost:5000/plataforma-guia:62fdfcce921e-b4
+[2026-11-24T23:06:23.760Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --format cyclonedx localhost:5000/plataforma-guia:62fdfcce921e-b4
+[2026-11-24T23:06:25.623Z] + cat trivy-imagen.txt
+[2026-11-24T23:06:25.623Z] 
+[2026-11-24T23:06:25.623Z] Report Summary
+[2026-11-24T23:06:25.623Z] 
+[2026-11-24T23:06:25.623Z] ┌────────────────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+[2026-11-24T23:06:25.623Z] │                             Target                             │  Type  │ Vulnerabilities │ Secrets │
+[2026-11-24T23:06:25.623Z] ├────────────────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+[2026-11-24T23:06:25.623Z] │ localhost:5000/plataforma-guia:62fdfcce921e-b4 (alpine 3.24.4) │ alpine │        0        │    -    │
+[2026-11-24T23:06:25.623Z] └────────────────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+[2026-11-24T23:06:25.623Z] Legend:
+[2026-11-24T23:06:25.623Z] - '-': Not scanned
+[2026-11-24T23:06:25.623Z] - '0': Clean (no security findings detected)
+[2026-11-24T23:06:25.623Z] 
+[2026-11-24T23:06:25.623Z] + docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache aquasec/trivy:0.76.2 image --quiet --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 localhost:5000/plataforma-guia:62fdfcce921e-b4
+[2026-11-24T23:06:26.174Z] 
+[2026-11-24T23:06:26.174Z] Report Summary
+[2026-11-24T23:06:26.174Z] 
+[2026-11-24T23:06:26.174Z] ┌────────────────────────────────────────────────────────────────┬────────┬─────────────────┬─────────┐
+[2026-11-24T23:06:26.174Z] │                             Target                             │  Type  │ Vulnerabilities │ Secrets │
+[2026-11-24T23:06:26.174Z] ├────────────────────────────────────────────────────────────────┼────────┼─────────────────┼─────────┤
+[2026-11-24T23:06:26.174Z] │ localhost:5000/plataforma-guia:62fdfcce921e-b4 (alpine 3.24.4) │ alpine │        0        │    -    │
+[2026-11-24T23:06:26.174Z] └────────────────────────────────────────────────────────────────┴────────┴─────────────────┴─────────┘
+[2026-11-24T23:06:26.174Z] Legend:
+[2026-11-24T23:06:26.174Z] - '-': Not scanned
+[2026-11-24T23:06:26.174Z] - '0': Clean (no security findings detected)
+[2026-11-24T23:06:26.174Z] 
+Post stage
+[Pipeline] archiveArtifacts
+[2026-11-24T23:06:26.200Z] Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publicar imagen en el registro)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-11-24T23:06:26.335Z] Registro sin autenticación: localhost:5000
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-11-24T23:06:26.630Z] + docker push localhost:5000/plataforma-guia:62fdfcce921e-b4
+[2026-11-24T23:06:26.630Z] The push refers to repository [localhost:5000/plataforma-guia]
+[2026-11-24T23:06:26.630Z] 86781d25d398: Waiting
+[2026-11-24T23:06:26.630Z] 881fc932939e: Waiting
+[2026-11-24T23:06:26.630Z] 0eeac1909cbc: Waiting
+[2026-11-24T23:06:26.630Z] 44136fa355b3: Waiting
+[2026-11-24T23:06:26.881Z] 0eeac1909cbc: Waiting
+[2026-11-24T23:06:26.881Z] 44136fa355b3: Waiting
+[2026-11-24T23:06:26.881Z] 86781d25d398: Waiting
+[2026-11-24T23:06:26.881Z] 881fc932939e: Waiting
+[2026-11-24T23:06:26.881Z] 86781d25d398: Waiting
+[2026-11-24T23:06:26.881Z] 881fc932939e: Waiting
+[2026-11-24T23:06:26.881Z] 0eeac1909cbc: Waiting
+[2026-11-24T23:06:26.881Z] 44136fa355b3: Waiting
+[2026-11-24T23:06:26.881Z] 86781d25d398: Waiting
+[2026-11-24T23:06:26.881Z] 881fc932939e: Waiting
+[2026-11-24T23:06:26.881Z] 0eeac1909cbc: Waiting
+[2026-11-24T23:06:26.881Z] 44136fa355b3: Waiting
+[2026-11-24T23:06:27.132Z] 0eeac1909cbc: Waiting
+[2026-11-24T23:06:27.132Z] 44136fa355b3: Waiting
+[2026-11-24T23:06:27.132Z] 86781d25d398: Waiting
+[2026-11-24T23:06:27.132Z] 881fc932939e: Waiting
+[2026-11-24T23:06:27.132Z] 0eeac1909cbc: Waiting
+[2026-11-24T23:06:27.132Z] 44136fa355b3: Waiting
+[2026-11-24T23:06:27.132Z] 86781d25d398: Waiting
+[2026-11-24T23:06:27.132Z] 881fc932939e: Waiting
+[2026-11-24T23:06:27.132Z] 75a4f9891e51: Pushed
+[2026-11-24T23:06:27.132Z] 6d9c1e031f05: Pushed
+[2026-11-24T23:06:27.132Z] 02cbfb45af97: Pushed
+[2026-11-24T23:06:27.132Z] 0eeac1909cbc: Pushed
+[2026-11-24T23:06:27.132Z] 44136fa355b3: Already exists
+[2026-11-24T23:06:27.132Z] 86781d25d398: Layer already exists
+[2026-11-24T23:06:27.132Z] 7eb569707982: Layer already exists
+[2026-11-24T23:06:27.132Z] 7bb632bc9bd7: Layer already exists
+[2026-11-24T23:06:27.132Z] 8f86b913fc60: Pushed
+[2026-11-24T23:06:27.132Z] 35c0fd0f500b: Pushed
+[2026-11-24T23:06:27.132Z] c9567306fd4d: Pushed
+[2026-11-24T23:06:27.132Z] 881fc932939e: Layer already exists
+[2026-11-24T23:06:27.132Z] f378b710ba3d: Pushed
+[2026-11-24T23:06:27.383Z] 62fdfcce921e-b4: digest: sha256:f9c30ad2b1bc322200173fa02c4292fea06b4c85d9c2f9fa4c3e350c0919014c size: 856
+[2026-11-24T23:06:27.383Z] + [ false = true ]
+[2026-11-24T23:06:27.383Z] + docker image inspect localhost:5000/plataforma-guia:62fdfcce921e-b4 --format {{index .RepoDigests 0}}
+[2026-11-24T23:06:27.383Z] + DIGEST=localhost:5000/plataforma-guia@sha256:f9c30ad2b1bc322200173fa02c4292fea06b4c85d9c2f9fa4c3e350c0919014c
+[2026-11-24T23:06:27.383Z] + echo Publicada: localhost:5000/plataforma-guia:62fdfcce921e-b4
+[2026-11-24T23:06:27.383Z] Publicada: localhost:5000/plataforma-guia:62fdfcce921e-b4
+[2026-11-24T23:06:27.383Z] + echo Digest inmutable: localhost:5000/plataforma-guia@sha256:f9c30ad2b1bc322200173fa02c4292fea06b4c85d9c2f9fa4c3e350c0919014c
+[2026-11-24T23:06:27.383Z] Digest inmutable: localhost:5000/plataforma-guia@sha256:f9c30ad2b1bc322200173fa02c4292fea06b4c85d9c2f9fa4c3e350c0919014c
+[2026-11-24T23:06:27.383Z] + printf imagen=%s\ndigest=%s\ncommit=%s\nbuild=%s\n localhost:5000/plataforma-guia:62fdfcce921e-b4 localhost:5000/plataforma-guia@sha256:f9c30ad2b1bc322200173fa02c4292fea06b4c85d9c2f9fa4c3e350c0919014c 62fdfcce921e832e2029d423640776d7a481a1c6 4
+[Pipeline] archiveArtifacts
+[2026-11-24T23:06:27.412Z] Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Desplegar (Kubernetes))
+Stage "Desplegar (Kubernetes)" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
+[2026-11-24T23:06:27.838Z] + docker image rm -f plataforma-guia:test-62fdfcce921e-b4
+[2026-11-24T23:06:27.838Z] + docker logout localhost:5000
+[Pipeline] echo
+[2026-11-24T23:06:27.861Z] CD completado: localhost:5000/plataforma-guia:62fdfcce921e-b4 construida, validada, escaneada y publicada.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
