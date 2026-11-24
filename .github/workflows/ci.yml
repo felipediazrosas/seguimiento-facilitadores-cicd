@@ -1,0 +1,256 @@
+# =============================================================================
+# CI — Integración continua de la plataforma «Guía de estandarización y
+# seguimiento de facilitadores» (Actividad 3 · Laboratorio técnico)
+#
+# Requisitos de la guía cubiertos:
+#   · Se ejecuta automáticamente ante cada push o pull request.
+#   · Checkout del código · Instalación de dependencias · Ejecución de pruebas.
+#   · (Opcional) Análisis estático de código: ESLint + SonarCloud (si hay token).
+# Además (continuidad con la Actividad 2 y skills 03/04/06/07):
+#   · Seguridad: secretos, dependencias y configuración (Trivy) + npm audit.
+#   · Construcción y prueba de humo de la imagen Docker, escaneo y SBOM.
+#
+# Acciones de terceros fijadas por SHA (lección de la referencia: el tag
+# trivy-action@0.28.0 desapareció y rompió su CI).
+# =============================================================================
+name: CI
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions: {} # nada por defecto; cada job declara lo mínimo que necesita
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  APP_DIR: plataforma-guia-implementacion
+  TRIVY_VERSION: v0.76.2
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1) Build + análisis estático + pruebas automatizadas (matriz de Node LTS)
+  # ---------------------------------------------------------------------------
+  build-test:
+    name: Build, lint y pruebas (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
+    defaults:
+      run:
+        working-directory: ${{ env.APP_DIR }}
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Configurar Node.js ${{ matrix.node }} (con caché de npm)
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: ${{ env.APP_DIR }}/package-lock.json
+
+      - name: Instalación de dependencias (npm ci, reproducible desde el lockfile)
+        run: npm ci --no-audit --no-fund
+
+      - name: Compilación / validación de sintaxis de todos los módulos JS
+        run: npm run check:syntax
+
+      - name: Análisis estático de código (ESLint)
+        run: npm run lint
+
+      - name: Ejecución de pruebas con cobertura (umbral 70 % de líneas)
+        run: npm run test:coverage
+
+      - name: Guardar reporte de cobertura (LCOV)
+        if: matrix.node == '24'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage
+          path: ${{ env.APP_DIR }}/coverage/
+          retention-days: 14
+
+  # ---------------------------------------------------------------------------
+  # 2) Seguridad del repositorio (shift-left, en paralelo con las pruebas)
+  # ---------------------------------------------------------------------------
+  security:
+    name: Seguridad del repositorio (Trivy + npm audit)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      security-events: write # publicar SARIF en Security → Code scanning
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Trivy fs → SARIF (vulnerabilidades, secretos y configuración; informativo)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          severity: HIGH,CRITICAL
+          format: sarif
+          output: trivy-fs.sarif
+          exit-code: '0'
+          version: ${{ env.TRIVY_VERSION }}
+
+      - name: Publicar SARIF en GitHub Security
+        if: always()
+        continue-on-error: true # repos privados sin GitHub Advanced Security no aceptan SARIF
+        uses: github/codeql-action/upload-sarif@915412ff23e8b7659517e607487dbeae018f2934 # v4.39.5
+        with:
+          sarif_file: trivy-fs.sarif
+          category: trivy-fs
+
+      - name: Gate — secretos expuestos en el repositorio
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: secret
+          format: table
+          exit-code: '1'
+          version: ${{ env.TRIVY_VERSION }}
+
+      - name: Gate — dependencias y Dockerfile (HIGH/CRITICAL con corrección disponible)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,misconfig
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          format: table
+          exit-code: '1'
+          version: ${{ env.TRIVY_VERSION }}
+
+      - name: Gate — npm audit (nivel high)
+        working-directory: ${{ env.APP_DIR }}
+        run: npm audit --audit-level=high
+
+  # ---------------------------------------------------------------------------
+  # 3) Imagen Docker: build → prueba de humo → escaneo → SBOM (sin publicar)
+  #    La publicación en el registro la hace el pipeline de CD (Jenkinsfile).
+  # ---------------------------------------------------------------------------
+  docker:
+    name: Imagen Docker (build, smoke test y Trivy)
+    runs-on: ubuntu-latest
+    needs: build-test
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      IMAGE: plataforma-guia:ci-${{ github.sha }}
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Construir imagen (etapa runtime)
+        run: |
+          docker build --target runtime \
+            --build-arg APP_VERSION="${GITHUB_SHA::12}" \
+            --build-arg VCS_REF="$GITHUB_SHA" \
+            -t "$IMAGE" "$APP_DIR"
+          docker image inspect "$IMAGE" --format 'Tamaño: {{.Size}} bytes · Usuario: {{.Config.User}}'
+
+      - name: Prueba de humo (health, usuario no root, código del servidor protegido)
+        env:
+          SMOKE_DATA_KEY: ${{ github.run_id }}-smoke # clave efímera solo para esta prueba
+        run: |
+          docker run -d --name smoke --read-only --tmpfs /tmp --cap-drop ALL \
+            --security-opt no-new-privileges:true -p 8080:8080 \
+            -e DATA_KEY="$SMOKE_DATA_KEY" -e ADMIN_USER=ci-smoke -e ADMIN_PASS="$SMOKE_DATA_KEY" "$IMAGE"
+          for _ in $(seq 1 30); do
+            curl -sf http://localhost:8080/api/health && break
+            sleep 1
+          done
+          echo
+          curl -sf http://localhost:8080/api/health | grep -q '"ok":true'
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/server/server.js)" = 403
+          test "$(docker exec smoke id -u)" != 0
+          echo "Smoke test OK"
+
+      - name: Logs del contenedor (diagnóstico)
+        if: always()
+        run: docker logs smoke 2>&1 | tail -20; docker rm -f smoke || true
+
+      - name: Gate — vulnerabilidades de la imagen (HIGH/CRITICAL con corrección)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE }}
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          format: table
+          exit-code: '1'
+          version: ${{ env.TRIVY_VERSION }}
+
+      - name: SBOM CycloneDX de la imagen
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE }}
+          format: cyclonedx
+          output: sbom-plataforma-guia.cdx.json
+          version: ${{ env.TRIVY_VERSION }}
+
+      - name: Guardar SBOM
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sbom
+          path: sbom-plataforma-guia.cdx.json
+          retention-days: 14
+
+  # ---------------------------------------------------------------------------
+  # 4) Calidad con SonarCloud (opcional: se activa al configurar el secreto)
+  #    Secret  SONAR_TOKEN · Variables  SONAR_ORGANIZATION, SONAR_PROJECT_KEY
+  # ---------------------------------------------------------------------------
+  sonar:
+    name: Calidad (SonarCloud)
+    runs-on: ubuntu-latest
+    needs: build-test
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: read
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # el mismo nombre aquí…
+    steps:
+      - name: Checkout del código (historial completo para «código nuevo»)
+        if: env.SONAR_TOKEN != '' # …y aquí (la referencia rompió esto con «SONAR_TOKE»)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Descargar cobertura
+        if: env.SONAR_TOKEN != ''
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: coverage
+          path: ${{ env.APP_DIR }}/coverage/
+
+      - name: Análisis SonarCloud + Quality Gate bloqueante
+        if: env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarqube-scan-action@70bad232163b09d998ea0707ee80c0ec80798c16 # v8.5.1
+        with:
+          args: >
+            -Dsonar.organization=${{ vars.SONAR_ORGANIZATION }}
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
+            -Dsonar.qualitygate.wait=true
+            -Dsonar.qualitygate.timeout=300
+
+      - name: Aviso — SonarCloud no configurado
+        if: env.SONAR_TOKEN == ''
+        run: echo "::warning::SONAR_TOKEN no configurado; análisis SonarCloud omitido (el análisis estático con ESLint sí se ejecutó)."

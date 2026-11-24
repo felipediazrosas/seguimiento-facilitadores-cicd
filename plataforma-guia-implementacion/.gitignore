@@ -1,0 +1,15 @@
+# Datos de operación: nunca se versionan (contienen información institucional)
+data/
+*.xlsx
+*.xls
+*.enc
+node_modules/
+
+# DevOps (Actividad 3): reportes generados, secretos locales y artefactos
+coverage/
+reports/
+*.sarif
+*.cdx.json
+.env
+.env.*
+!.env.example

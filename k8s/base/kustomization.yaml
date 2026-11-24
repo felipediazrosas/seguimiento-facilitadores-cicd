@@ -1,0 +1,15 @@
+# Base de kustomize. El stage «Desplegar» del Jenkinsfile genera un overlay que
+# sobrescribe images: con la imagen exacta publicada (registro + tag <sha>-b<build>).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - deployment.yaml
+configMapGenerator:
+  - name: plataforma-guia-config
+    namespace: seguimiento
+    literals:
+      - COOKIE_SECURE=1 # en el clúster se sirve detrás de HTTPS (Ingress / balanceador)
+      - SESSION_HOURS=12
+generatorOptions:
+  disableNameSuffixHash: true

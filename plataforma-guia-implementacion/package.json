@@ -1,0 +1,24 @@
+{
+  "name": "plataforma-guia-implementacion",
+  "version": "1.2.0",
+  "description": "Guía de estandarización y seguimiento de facilitadores (Unisabana e-Learning). Servidor Node.js sin dependencias de ejecución.",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "server/server.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "lint": "eslint .",
+    "check:syntax": "node --check server/server.js && node --check js/config.js && node --check js/estandar.js && node --check js/store.js && node --check js/excel.js && node --check js/app.js",
+    "test": "node --test --test-reporter=spec \"test/*.test.js\"",
+    "pretest:coverage": "node -e \"require('fs').mkdirSync('coverage',{recursive:true})\"",
+    "test:coverage":"node --test --experimental-test-coverage --test-coverage-include=server/** --test-coverage-lines=70 --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage/lcov.info \"test/*.test.js\""
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0"
+  }
+}

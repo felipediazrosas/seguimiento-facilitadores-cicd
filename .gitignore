@@ -1,0 +1,22 @@
+# Dependencias y artefactos generados
+node_modules/
+coverage/
+*.sarif
+*.cdx.json
+
+# Datos institucionales: nunca se versionan
+data/
+*.xlsx
+*.xls
+*.enc
+
+# Secretos y configuración local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+kubeconfig*
+
+# Datos del Jenkins local de laboratorio
+jenkins/.env

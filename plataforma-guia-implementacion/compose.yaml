@@ -1,0 +1,42 @@
+# =============================================================================
+# Ejecución local con Docker Compose (entorno de desarrollo / pruebas)
+# Uso:
+#   cp .env.example .env      # y completar DATA_KEY y ADMIN_PASS (no se versiona)
+#   docker compose up --build -d
+#   http://localhost:8080
+#   docker compose down       # los datos cifrados quedan en el volumen guia-data
+# =============================================================================
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+      args:
+        APP_VERSION: local
+    image: plataforma-guia:local
+    ports:
+      - "127.0.0.1:8080:8080"          # solo accesible desde este equipo
+    environment:
+      DATA_KEY: ${DATA_KEY:?Defina DATA_KEY en el archivo .env}
+      ADMIN_USER: ${ADMIN_USER:-coordinacion}
+      ADMIN_PASS: ${ADMIN_PASS:?Defina ADMIN_PASS en el archivo .env}
+      COOKIE_SECURE: ${COOKIE_SECURE:-}
+      SESSION_HOURS: ${SESSION_HOURS:-12}
+    volumes:
+      - guia-data:/data
+    read_only: true                    # el código del contenedor es inmutable
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    init: true                         # reenvía SIGTERM a Node (parada limpia)
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  guia-data:

@@ -1,0 +1,36 @@
+# =============================================================================
+# Laboratorio local de CD: Jenkins + registro de imágenes (Docker Registry).
+# Uso (desde esta carpeta):
+#   cp .env.example .env     # definir JENKINS_ADMIN_PASSWORD y REPO_URL
+#   docker compose up -d --build
+#   Jenkins:  http://localhost:8081   (usuario admin)
+#   Registro: http://localhost:5000/v2/_catalog
+#   docker compose down      # -v para borrar también los datos de Jenkins
+# =============================================================================
+services:
+  jenkins:
+    build: .
+    image: plataforma-guia-jenkins:lab
+    ports:
+      - "127.0.0.1:8081:8080"
+    environment:
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:?Defina JENKINS_ADMIN_PASSWORD en jenkins/.env}
+      REPO_URL: ${REPO_URL:?Defina REPO_URL en jenkins/.env}
+    volumes:
+      - jenkins-home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    group_add:
+      - "0" # acceso al socket de Docker (root:root 660) sin ejecutar Jenkins como root
+    restart: unless-stopped
+
+  registry:
+    image: registry:3
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - registry-data:/var/lib/registry
+    restart: unless-stopped
+
+volumes:
+  jenkins-home:
+  registry-data:

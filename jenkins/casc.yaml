@@ -1,0 +1,51 @@
+# =============================================================================
+# Jenkins Configuration as Code (JCasC)
+# · Usuario administrador con la contraseña de JENKINS_ADMIN_PASSWORD (.env local,
+#   no versionado). Lectura anónima habilitada SOLO para ver ejecuciones en el
+#   laboratorio local (el puerto se publica únicamente en 127.0.0.1).
+# · Job «plataforma-guia-cd»: pipeline desde SCM que lee el Jenkinsfile del
+#   repositorio indicado en REPO_URL (rama main) y consulta cambios cada 5 min.
+# =============================================================================
+jenkins:
+  systemMessage: "Laboratorio CI/CD · Plataforma Guía de estandarización (Actividad 3)"
+  numExecutors: 2
+  mode: NORMAL
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: ${JENKINS_ADMIN_PASSWORD}
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: true
+
+unclassified:
+  location:
+    url: http://localhost:8081/
+
+jobs:
+  - script: |
+      pipelineJob('plataforma-guia-cd') {
+        displayName('Plataforma Guía · CD (Jenkins)')
+        description('Pipeline de entrega continua: clonar → validar → construir imagen Docker → prueba de humo → Trivy → publicar en el registro → (opcional) desplegar en Kubernetes.')
+        properties {
+          pipelineTriggers {
+            triggers {
+              pollSCM { scmpoll_spec('H/5 * * * *') }
+            }
+          }
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url('${REPO_URL}') }
+                branch('*/main')
+              }
+            }
+            scriptPath('Jenkinsfile')
+            lightweight(true)
+          }
+        }
+      }

@@ -1,0 +1,18 @@
+# Contexto de construcción mínimo: sin dependencias locales, datos, secretos ni reportes
+node_modules
+coverage
+reports
+data
+*.xlsx
+*.xls
+*.enc
+*.sarif
+*.cdx.json
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+Dockerfile
+.dockerignore
+compose.yaml

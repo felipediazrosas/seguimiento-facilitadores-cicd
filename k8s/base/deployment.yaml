@@ -1,0 +1,117 @@
+# =============================================================================
+# Despliegue de la plataforma en Kubernetes (base de kustomize).
+# Adaptado de skills/10-infrastructure-as-code/templates/k8s/deployment.yaml.
+#
+# Decisión de arquitectura: UNA réplica con estrategia Recreate.
+#   El servidor guarda las sesiones en memoria y los datos en archivos cifrados
+#   (DATA_DIR). Dos réplicas tendrían sesiones y datos distintos, y un rolling
+#   update tendría dos procesos escribiendo el mismo volumen. Escalar
+#   horizontalmente requiere primero la base de datos institucional (Actividad 2).
+#
+# Secretos: el Secret «plataforma-guia-secrets» se crea FUERA del repositorio:
+#   kubectl -n seguimiento create secret generic plataforma-guia-secrets \
+#     --from-literal=DATA_KEY=<clave> --from-literal=ADMIN_USER=<usuario> \
+#     --from-literal=ADMIN_PASS=<contraseña>
+# =============================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plataforma-guia
+  namespace: seguimiento
+  labels:
+    app: plataforma-guia
+    app.kubernetes.io/part-of: plataforma-guia
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5 # revisiones disponibles para «kubectl rollout undo»
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: { app: plataforma-guia }
+  template:
+    metadata:
+      labels: { app: plataforma-guia }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: app
+          image: plataforma-guia:definir-en-overlay # el overlay del CD (kustomize images:) fija registro y tag
+          imagePullPolicy: IfNotPresent
+          ports:
+            - { name: http, containerPort: 8080 }
+          env:
+            - { name: PORT, value: "8080" }
+            - { name: DATA_DIR, value: /data }
+            - name: COOKIE_SECURE
+              valueFrom: { configMapKeyRef: { name: plataforma-guia-config, key: COOKIE_SECURE } }
+            - name: SESSION_HOURS
+              valueFrom: { configMapKeyRef: { name: plataforma-guia-config, key: SESSION_HOURS } }
+            - name: DATA_KEY
+              valueFrom: { secretKeyRef: { name: plataforma-guia-secrets, key: DATA_KEY } }
+            - name: ADMIN_USER
+              valueFrom: { secretKeyRef: { name: plataforma-guia-secrets, key: ADMIN_USER } }
+            - name: ADMIN_PASS
+              valueFrom: { secretKeyRef: { name: plataforma-guia-secrets, key: ADMIN_PASS } }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          resources:
+            requests: { cpu: 50m, memory: 96Mi }
+            limits: { cpu: 500m, memory: 256Mi }
+          readinessProbe:
+            httpGet: { path: /api/health, port: http }
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /api/health, port: http }
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          volumeMounts:
+            - { name: data, mountPath: /data }
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: plataforma-guia-data }
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plataforma-guia-data
+  namespace: seguimiento
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests: { storage: 1Gi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plataforma-guia
+  namespace: seguimiento
+  labels: { app: plataforma-guia }
+spec:
+  selector: { app: plataforma-guia }
+  ports:
+    - { name: http, port: 8080, targetPort: http }
+---
+# Solo se admite tráfico hacia el puerto de la aplicación
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: plataforma-guia-allow-http
+  namespace: seguimiento
+spec:
+  podSelector: { matchLabels: { app: plataforma-guia } }
+  policyTypes: [Ingress]
+  ingress:
+    - ports:
+        - { protocol: TCP, port: 8080 }

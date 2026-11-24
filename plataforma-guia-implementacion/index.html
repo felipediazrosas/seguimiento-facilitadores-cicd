@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Guía de estandarización · Implementación e-Learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap">
+        <div class="eyebrow">Unisabana e-Learning · Área de Implementación</div>
+        <h1>Guía de estandarización y seguimiento de facilitadores</h1>
+        <div class="bar">
+          <div class="status" id="status"><span class="dot"></span>Conectando…</div>
+          <div class="row">
+            <div class="row" id="userBox"></div>
+            <button
+              class="btn sm hide"
+              id="btnImport"
+              title="Cargar la versión más reciente del Excel en la guía"
+            >
+              Actualizar desde Excel</button
+            ><button
+              class="btn sm pri hide"
+              id="btnExport"
+              title="Escribir novedades, indicaciones y avances en una copia de tu Excel"
+            >
+              Llevar al Excel</button
+            ><input type="file" id="fileE" accept=".xlsx,.xlsm" class="hide" />
+            <input type="file" id="fileX" accept=".xlsx,.xlsm,.xls" class="hide" />
+          </div>
+        </div>
+      </div>
+    </header>
+    <nav class="tabs" aria-label="Secciones">
+      <div class="wrap">
+        <a href="#equipo" id="tEquipo">Equipo</a>
+        <a href="#facilitador" id="tFac">Facilitador</a>
+        <a href="#novedades">Novedades<span class="c" id="cNov">0</span></a>
+        <a href="#proceso">Proceso estándar</a>
+        <a href="#plantillas">Plantillas</a>
+        <a href="#criterios">Criterios y roles</a>
+        <a href="#usuarios" id="tUsuarios" class="hide">Usuarios</a>
+      </div>
+    </nav>
+    <main>
+      <div class="wrap">
+        <section class="view" id="v-equipo">
+          <h2>Equipo de facilitadores</h2>
+          <p class="sub">
+            Vista de Coordinación. Carga, cursos por fase, indicaciones y novedades de cada facilitador,
+            calculadas en vivo desde el Excel de programación. Toca un facilitador para abrir su panel y
+            dejarle indicaciones.
+          </p>
+          <div class="grid g4" id="kTeam"></div>
+          <div class="row sp sec" style="margin-bottom: 10px">
+            <div class="row">
+              <input id="tSearch" placeholder="Buscar facilitador" style="width: 220px" /><select
+                id="tSort"
+                style="width: auto"
+              >
+                <option value="carga">Ordenar por carga</option>
+                <option value="pend">Por pendientes de reporte</option>
+                <option value="ind">Por indicaciones abiertas</option>
+                <option value="nom">Por nombre</option>
+              </select>
+            </div>
+            <div class="legend">
+              <span style="--c: var(--wa)">Alistamiento</span><span style="--c: var(--ok)">Desarrollo</span
+              ><span style="--c: #a88b5e">Cierre</span><span style="--c: var(--bad)">Pend. reporte</span
+              ><span style="--c: var(--ln)">Próx. inicio</span>
+            </div>
+          </div>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Facilitador</th>
+                  <th style="min-width: 170px">Índice de carga</th>
+                  <th class="hm" style="min-width: 150px">Cursos por fase</th>
+                  <th class="n">Activos</th>
+                  <th class="n">Pend. reporte</th>
+                  <th class="n hm">Estudiantes</th>
+                  <th class="n">Checklist diario</th>
+                  <th class="n">Indicaciones</th>
+                  <th class="n">Novedades</th>
+                </tr>
+              </thead>
+              <tbody id="teamRows"></tbody>
+            </table>
+          </div>
+          <p class="small muted">
+            Índice de carga = suma de la carga de cada curso ponderada por su fase (alistamiento 17 %,
+            desarrollo 73 %, cierre y pendiente de reporte 10 %), el mismo cálculo de la columna Cargabilidad
+            total de la hoja Seguimiento Cierre Cursos. La barra compara con el facilitador más cargado; se
+            marca en color quien supera en más de 10 % o 25 % el promedio del equipo.
+          </p>
+          <div class="grid g2 sec">
+            <div class="card">
+              <h3>Inicios en los próximos 14 días</h3>
+              <div id="proxTeam"></div>
+            </div>
+            <div class="card">
+              <h3>Actividad reciente</h3>
+              <div id="actTeam"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="v-facilitador">
+          <div class="row sp" style="align-items: end; margin-bottom: 6px">
+            <div>
+              <h2 id="fName">Facilitador</h2>
+              <p class="sub" id="fSub" style="margin: 0"></p>
+            </div>
+            <label class="f" style="min-width: 240px">Facilitador<select id="fSel"></select></label>
+          </div>
+          <div class="grid g4" id="kFac" style="margin: 14px 0"></div>
+          <div class="chips" id="fTabs" role="tablist" style="margin-bottom: 16px">
+            <button class="chip on" data-ft="dia">Mi día</button
+            ><button class="chip" data-ft="prog">Programación</button
+            ><button class="chip" data-ft="cursos">Cursos</button
+            ><button class="chip" data-ft="ind">Indicaciones y novedades</button>
+          </div>
+
+          <div id="fp-dia" class="fp">
+            <div class="grid g2">
+              <div class="card">
+                <div class="row sp">
+                  <h3 style="margin: 0">Checklist diario</h3>
+                  <span class="small muted" id="rutProg"></span>
+                </div>
+                <div class="pbar" style="margin: 8px 0 6px"><i id="rutBar" style="width: 0"></i></div>
+                <p class="small muted" style="margin: 0 0 8px" id="rutNote">
+                  Se reinicia cada día. Coordinación ve el avance en vivo.
+                </p>
+                <div id="rutina2"></div>
+                <h4 style="margin-top: 14px" id="tocaTitle">Hoy toca</h4>
+                <ul class="check" id="toca"></ul>
+              </div>
+              <div>
+                <div class="card" style="margin-bottom: 12px">
+                  <div class="row sp">
+                    <h3 style="margin: 0">Qué hacer hoy</h3>
+                    <span class="small muted" id="todoDate"></span>
+                  </div>
+                  <p class="small muted" style="margin: 4px 0 12px">
+                    Prioridades calculadas con el Excel, las indicaciones de Coordinación y las novedades.
+                  </p>
+                  <div class="todo" id="todo"></div>
+                </div>
+                <div class="card">
+                  <h3>Agenda de hoy</h3>
+                  <div id="hoyAgenda"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="fp-prog" class="fp hide">
+            <div class="row sp" style="margin-bottom: 10px">
+              <div class="row">
+                <button class="btn sm" id="wPrev" aria-label="Semana anterior">←</button><b id="wLabel"></b
+                ><button class="btn sm" id="wNext" aria-label="Semana siguiente">→</button
+                ><button class="btn sm" id="wHoy">Hoy</button>
+              </div>
+              <div class="legend">
+                <span style="--c: var(--ok)">Encuentro sincrónico</span
+                ><span style="--c: var(--wa)">Inicio de módulo o curso</span
+                ><span style="--c: var(--bad)">Cierre o fecha límite</span>
+              </div>
+            </div>
+            <div class="week7" id="week7"></div>
+            <div class="sec card">
+              <h3>Próximas 4 semanas</h3>
+              <div id="prox4"></div>
+            </div>
+          </div>
+
+          <div id="fp-cursos" class="fp hide">
+            <div class="row sp" style="margin-bottom: 10px">
+              <div class="chips" id="fChips"></div>
+              <input id="cSearch" placeholder="Buscar curso, sigla o docente" style="max-width: 280px" />
+            </div>
+            <div id="cList"></div>
+          </div>
+
+          <div id="fp-ind" class="fp hide">
+            <div class="grid g2">
+              <div class="card">
+                <div class="row sp">
+                  <h3 style="margin: 0">Indicaciones de Coordinación</h3>
+                  <span class="small muted" id="asigCount"></span>
+                </div>
+                <div
+                  id="asigForm"
+                  class="hide"
+                  style="margin: 12px 0; padding: 12px; background: var(--sf2); border-radius: 10px"
+                >
+                  <div class="grid g2">
+                    <label class="f"
+                      >Tipo<select id="aTipo">
+                        <option>Tarea</option>
+                        <option>Prioridad</option>
+                        <option>Nota</option>
+                      </select></label
+                    ><label class="f">Fecha límite<input type="date" id="aLim" /></label>
+                  </div>
+                  <label class="f" style="margin-top: 8px"
+                    >Curso (opcional)<select id="aCurso"></select
+                  ></label>
+                  <label class="f" style="margin-top: 8px"
+                    >Indicación<textarea id="aTxt" placeholder="Qué debe hacer o tener en cuenta"></textarea>
+                  </label>
+                  <div style="margin-top: 8px">
+                    <button class="btn pri sm" id="aAdd">Enviar al facilitador</button>
+                  </div>
+                </div>
+                <div id="asigList" style="margin-top: 10px"></div>
+              </div>
+              <div class="card">
+                <h3>Novedades del facilitador</h3>
+                <div id="fNovList"></div>
+                <a
+                  href="#novedades"
+                  class="btn sm"
+                  style="text-decoration: none; display: inline-block; margin-top: 10px"
+                  >Registrar o gestionar novedades</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="v-novedades">
+          <h2>Novedades</h2>
+          <p class="sub">
+            Toda desviación del plan se registra aquí y la ve Coordinación en tiempo real. Una novedad solo se
+            cierra cuando se verifica que la solución funcionó.
+          </p>
+          <div class="grid g2">
+            <div class="card">
+              <h3>Registrar novedad</h3>
+              <div class="grid g2" style="margin-top: 8px">
+                <label class="f">Facilitador<select id="nFa"></select></label
+                ><label class="f">Curso<select id="nCurso"></select></label>
+                <label class="f"
+                  >Tipo<select id="nTipo">
+                    <option>Información</option>
+                    <option>Aula y configuración</option>
+                    <option>Docente</option>
+                    <option>Estudiante</option>
+                    <option>Plataforma o soporte</option>
+                    <option>Cronograma y fechas</option>
+                    <option>Calificaciones</option>
+                  </select></label
+                >
+                <label class="f"
+                  >Severidad<select id="nSev">
+                    <option value="Alta">Alta: impide la operación</option>
+                    <option value="Media" selected>Media: afecta a un grupo</option>
+                    <option value="Baja">Baja: caso individual</option>
+                  </select></label
+                >
+                <label class="f"
+                  >¿Quién la resuelve?<select id="nResp">
+                    <option>Implementación</option>
+                    <option>Escalada a Coordinación</option>
+                    <option>Soporte (ticket)</option>
+                  </select></label
+                >
+              </div>
+              <label class="f" style="margin-top: 8px"
+                >Descripción y evidencia<textarea id="nDesc"></textarea>
+              </label>
+              <label class="f" style="margin-top: 8px">Acción correctiva (opcional)<input id="nAcc" /></label>
+              <div style="margin-top: 10px"><button class="btn pri" id="nAdd">Registrar</button></div>
+            </div>
+            <div class="card">
+              <h3>Plazos por severidad</h3>
+              <div class="tw" style="margin-top: 8px">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Severidad</th>
+                      <th>Primera respuesta</th>
+                      <th>Solución</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="tag bad">Alta</span></td>
+                      <td>Mismo día</td>
+                      <td>1 día hábil</td>
+                    </tr>
+                    <tr>
+                      <td><span class="tag wa">Media</span></td>
+                      <td>1 día hábil</td>
+                      <td>2 días hábiles</td>
+                    </tr>
+                    <tr>
+                      <td><span class="tag">Baja</span></td>
+                      <td>2 días hábiles</td>
+                      <td>5 días hábiles</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="small muted">Plazos propuestos para el estándar.</p>
+            </div>
+          </div>
+          <div class="row sp sec" style="margin-bottom: 10px">
+            <div class="row">
+              <select id="nFiltro" style="width: auto">
+                <option value="abiertas">Abiertas</option>
+                <option value="todas">Todas</option>
+                <option value="cerradas">Cerradas y verificadas</option></select
+              ><select id="nFiltroFa" style="width: auto"></select>
+            </div>
+            <span class="small muted" id="nRes"></span>
+          </div>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Facilitador</th>
+                  <th>Curso</th>
+                  <th>Tipo</th>
+                  <th>Sev.</th>
+                  <th>Descripción</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="nList"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="view" id="v-proceso">
+          <h2>Proceso estándar</h2>
+          <p class="sub">
+            Las 9 etapas tal como deben hacerse. D0 es el inicio del curso. Los plazos son la propuesta de
+            estándar.
+          </p>
+          <div class="timeline" id="timeline"></div>
+          <div id="stages"></div>
+        </section>
+
+        <section class="view" id="v-plantillas">
+          <h2>Plantillas de mensajes</h2>
+          <p class="sub">
+            Elige un curso para llenar las plantillas con sus datos del Excel, completa lo que falte y copia.
+          </p>
+          <div class="card" style="margin-bottom: 14px">
+            <label class="f">Llenar con los datos de un curso<select id="tCurso"></select></label>
+            <div class="grid g4" style="margin-top: 10px">
+              <label class="f">Programa<input data-v="programa" /></label
+              ><label class="f">Asignatura<input data-v="asignatura" /></label
+              ><label class="f">Docente<input data-v="docente" /></label
+              ><label class="f">Facilitador(a)<input data-v="facilitador" /></label>
+              <label class="f">Fecha<input data-v="fecha" /></label
+              ><label class="f">Hora<input data-v="hora" /></label
+              ><label class="f">Enlace<input data-v="enlace" /></label
+              ><label class="f">Fecha límite<input data-v="limite" /></label>
+            </div>
+            <label class="f" style="margin-top: 8px">Detalle<input data-v="detalle" /></label>
+          </div>
+          <div class="row" style="margin-bottom: 10px">
+            <select id="tFiltro" style="width: auto">
+              <option value="">Todos los momentos</option>
+            </select>
+          </div>
+          <div class="grid g2" id="tplList"></div>
+        </section>
+
+        <section class="view" id="v-criterios">
+          <h2>Criterios comunes y roles</h2>
+          <p class="sub">Definiciones que todos usan igual.</p>
+          <div class="grid g2" id="defs"></div>
+          <div class="sec">
+            <h3>Quién hace qué</h3>
+            <div class="tw">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Etapa</th>
+                    <th>Coordinación</th>
+                    <th>Facilitador</th>
+                    <th>Docente</th>
+                    <th>Soporte</th>
+                  </tr>
+                </thead>
+                <tbody id="raci"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="grid g2 sec">
+            <div class="card">
+              <h3>Canales oficiales</h3>
+              <table>
+                <tbody id="canales"></tbody>
+              </table>
+            </div>
+            <div class="card">
+              <h3>Organización de archivos</h3>
+              <p class="small muted" style="margin-top: 0">AAAA-MM_Programa_Documento_v01</p>
+              <ul id="carpetas" class="mono small"></ul>
+            </div>
+          </div>
+          <div class="grid g2 sec">
+            <div class="card">
+              <h3>Rutina diaria</h3>
+              <div id="rutina"></div>
+            </div>
+            <div class="card">
+              <h3>Ritmo semanal</h3>
+              <div id="semana"></div>
+            </div>
+          </div>
+          <div class="sec">
+            <h3>Indicadores que alimenta este estándar</h3>
+            <div class="tw">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Indicador</th>
+                    <th>Registro que lo alimenta</th>
+                    <th>Meta propuesta</th>
+                  </tr>
+                </thead>
+                <tbody id="kpis"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="grid g2 sec">
+            <div class="card">
+              <h3>Riesgos que se revisan cada semana</h3>
+              <ul id="riesgos" class="small"></ul>
+            </div>
+            <div class="card">
+              <h3>Lecciones aprendidas</h3>
+              <p class="small muted" style="margin-top: 0">
+                Al cerrar cada programa se responde en pocas líneas:
+              </p>
+              <ol class="steps small">
+                <li>¿Qué salió distinto a lo planeado?</li>
+                <li>¿Por qué pasó?</li>
+                <li>¿Qué haremos distinto la próxima vez?</li>
+                <li>¿Hay que cambiar esta guía? ¿En qué paso?</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="v-usuarios">
+          <h2>Usuarios y permisos</h2>
+          <p class="sub" id="uSub">
+            Cada persona entra con su usuario. El rol decide qué ve y qué puede cambiar; el servidor aplica
+            los permisos aunque alguien intente saltarse la interfaz.
+          </p>
+          <div class="grid g2" style="margin-bottom: 16px">
+            <div class="card" id="uForm">
+              <h3>Crear usuario</h3>
+              <div class="grid g2" style="margin-top: 8px">
+                <label class="f"
+                  >Usuario<input id="uUser" placeholder="ej. nicole.suarez" autocomplete="off" /></label
+                ><label class="f">Nombre<input id="uNom" placeholder="Nombre para mostrar" /></label>
+                <label class="f"
+                  >Rol<select id="uRol">
+                    <option value="facilitador">Facilitador</option>
+                    <option value="coordinador">Coordinador</option>
+                  </select></label
+                ><label class="f" id="uFaWrap">Facilitador del Excel<select id="uFa"></select></label>
+              </div>
+              <label class="f" style="margin-top: 8px"
+                >Contraseña temporal (mínimo 8 caracteres)<input id="uPass" type="text" autocomplete="off"
+              /></label>
+              <div class="row" style="margin-top: 10px">
+                <button class="btn pri sm" id="uAdd">Crear usuario</button
+                ><button class="btn sm" id="uGen">Generar contraseña</button>
+              </div>
+              <p class="small muted" id="uMsg"></p>
+            </div>
+            <div class="card">
+              <h3>Qué puede hacer cada rol</h3>
+              <div class="tw" style="border: none">
+                <table class="small">
+                  <thead>
+                    <tr>
+                      <th>Acción</th>
+                      <th>Coordinador</th>
+                      <th>Facilitador</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ver el equipo completo y la carga</td>
+                      <td>Sí</td>
+                      <td>No</td>
+                    </tr>
+                    <tr>
+                      <td>Ver y trabajar sus cursos</td>
+                      <td>Todos</td>
+                      <td>Solo los suyos</td>
+                    </tr>
+                    <tr>
+                      <td>Crear y eliminar indicaciones</td>
+                      <td>Sí</td>
+                      <td>No</td>
+                    </tr>
+                    <tr>
+                      <td>Marcar y responder indicaciones</td>
+                      <td>Sí</td>
+                      <td>Solo las suyas</td>
+                    </tr>
+                    <tr>
+                      <td>Registrar novedades</td>
+                      <td>De todos</td>
+                      <td>De sus cursos</td>
+                    </tr>
+                    <tr>
+                      <td>Checklist diario</td>
+                      <td>Consulta</td>
+                      <td>Lo diligencia</td>
+                    </tr>
+                    <tr>
+                      <td>Checklist de cursos, notas y cierres</td>
+                      <td>Todos</td>
+                      <td>Solo sus cursos</td>
+                    </tr>
+                    <tr>
+                      <td>Actualizar desde Excel y llevar al Excel</td>
+                      <td>Sí</td>
+                      <td>No</td>
+                    </tr>
+                    <tr>
+                      <td>Gestionar usuarios</td>
+                      <td>Sí</td>
+                      <td>No</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Nombre</th>
+                  <th>Rol</th>
+                  <th>Facilitador vinculado</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="uList"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap">
+        Fuente: Programacion_2026.xlsx (hojas 2026, Seguimiento Cierre Cursos y Carga). Solo se usan datos
+        operativos: no se cargan cédulas, celulares, direcciones ni correos personales.
+      </div>
+    </footer>
+    <div class="overlay" id="ov">
+      <div class="modal">
+        <h3 id="ovT">Actualizando desde Excel</h3>
+        <p class="muted small" id="ovM"></p>
+        <div class="pbar"><i id="ovB" style="width: 0"></i></div>
+      </div>
+    </div>
+    <div class="drawer-bg" id="dBg"></div>
+    <aside class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-label="Detalle del curso">
+      <div class="dhead">
+        <div id="dHead"></div>
+        <button class="btn sm" id="dClose" aria-label="Cerrar">Cerrar ✕</button>
+      </div>
+      <div class="dbody" id="dBody"></div>
+    </aside>
+    <div class="overlay" id="exp">
+      <div class="modal">
+        <h3>Llevar la información al Excel</h3>
+        <p class="small muted">
+          Elige tu archivo Programacion_2026.xlsx actual. La guía te devuelve una copia con:
+        </p>
+        <ul class="small">
+          <li>
+            Tres hojas nuevas: <b>Guía Novedades</b>, <b>Guía Indicaciones</b> y <b>Guía Seguimiento</b> (se
+            reemplazan si ya existen).
+          </li>
+          <li>
+            Las tareas de cierre marcadas en la guía escritas en <b>Seguimiento Cierre Cursos</b>, solo en
+            celdas que estén vacías.
+          </li>
+        </ul>
+        <p class="small muted">
+          No se modifica nada más: tablas dinámicas, formatos y fórmulas quedan igual, y Excel recalcula al
+          abrir.
+        </p>
+        <div class="row" style="margin-top: 14px">
+          <button class="btn pri" id="expGo">Elegir archivo</button
+          ><button class="btn" id="expNo">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <div class="login hide" id="login" role="dialog" aria-modal="true" aria-labelledby="lgT">
+      <div class="lcard">
+        <div class="eyebrow">Unisabana e-Learning · Área de Implementación</div>
+        <h2 id="lgT" style="margin: 6px 0 4px">Guía de estandarización</h2>
+        <p class="small muted" id="lgSub" style="margin: 0 0 16px">
+          Ingrese con su usuario institucional asignado por Coordinación.
+        </p>
+        <form id="lgForm" autocomplete="on">
+          <label class="f">Usuario<input id="lgUser" autocomplete="username" required /></label>
+          <label class="f" style="margin-top: 10px"
+            >Contraseña<input id="lgPass" type="password" autocomplete="current-password" required
+          /></label>
+          <button class="btn pri" style="width: 100%; margin-top: 14px" id="lgBtn">Entrar</button>
+        </form>
+        <div id="lgLocal" class="hide">
+          <button class="btn pri" style="width: 100%" id="lgCoord">Entrar como Coordinación</button
+          ><label class="f" style="margin-top: 12px">o como facilitador<select id="lgFa"></select></label
+          ><button class="btn" style="width: 100%; margin-top: 8px" id="lgFacBtn">
+            Entrar como facilitador
+          </button>
+        </div>
+        <p class="small" id="lgErr" style="color: var(--bad); min-height: 1.2em; margin: 10px 0 0"></p>
+        <p class="small muted" id="lgNote" style="margin: 8px 0 0"></p>
+      </div>
+    </div>
+    <div class="overlay" id="pwd">
+      <div class="modal">
+        <h3>Cambiar contraseña</h3>
+        <label class="f" style="margin-top: 8px"
+          >Contraseña actual<input id="pwA" type="password" autocomplete="current-password" /></label
+        ><label class="f" style="margin-top: 8px"
+          >Nueva contraseña (mínimo 8 caracteres)<input id="pwN" type="password" autocomplete="new-password"
+        /></label>
+        <p class="small" id="pwErr" style="color: var(--bad); min-height: 1.2em"></p>
+        <div class="row">
+          <button class="btn pri" id="pwOk">Guardar</button><button class="btn" id="pwNo">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <!-- ============================================================
+     Orden de carga de los módulos (no cambiar):
+     1. config.js   → configuración y SELECCIÓN CONDICIONAL de la base de datos
+     2. estandar.js → contenido del proceso estándar (etapas, plantillas, criterios)
+     3. store.js    → adaptadores de base de datos (API REST, local)
+     4. excel.js    → importar y exportar el Excel de programación
+     5. app.js      → interfaz y lógica de negocio
+     ============================================================ -->
+    <script src="js/config.js"></script>
+    <script src="js/estandar.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/excel.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
