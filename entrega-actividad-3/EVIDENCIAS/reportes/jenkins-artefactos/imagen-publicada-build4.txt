@@ -1,0 +1,4 @@
+imagen=localhost:5000/plataforma-guia:62fdfcce921e-b4
+digest=localhost:5000/plataforma-guia@sha256:f9c30ad2b1bc322200173fa02c4292fea06b4c85d9c2f9fa4c3e350c0919014c
+commit=62fdfcce921e832e2029d423640776d7a481a1c6
+build=4

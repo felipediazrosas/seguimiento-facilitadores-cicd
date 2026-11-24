@@ -1,0 +1,35 @@
+flowchart LR
+    subgraph Dev["Desarrollo"]
+      L[Equipo local<br/>npm test · lint · compose]
+    end
+    subgraph GitHub["GitHub (SaaS)"]
+      R[(Repositorio público<br/>main + ramas + PR)]
+      A[GitHub Actions<br/>ci.yml]
+      SEC[Security › Code scanning<br/>SARIF de Trivy]
+      DB[Dependabot<br/>npm · docker · actions]
+      ART[(Artefactos<br/>coverage · sbom)]
+    end
+    subgraph Lab["Laboratorio CD (Docker local · jenkins/compose.yaml)"]
+      J[Jenkins 2.580.2<br/>JCasC · job plataforma-guia-cd]
+      DS[[Docker Engine<br/>vía socket]]
+      T[Trivy 0.76.2<br/>contenedor]
+      REG[(Registro OCI<br/>registry:3 · localhost:5000)]
+    end
+    subgraph Ext["Opcional / fases siguientes"]
+      DH[(Docker Hub / GHCR)]
+      SC[SonarCloud]
+      K[(Kubernetes<br/>k8s/base · kustomize)]
+    end
+    L -->|push / PR| R
+    R --> A
+    A --> SEC
+    A --> ART
+    A -.SONAR_TOKEN.-> SC
+    DB -->|PR automáticos| R
+    R -->|pollSCM · clone| J
+    J --> DS
+    DS --> T
+    J -->|docker push| REG
+    J -.registry-creds.-> DH
+    J -.kubeconfig · DEPLOY_TARGET.-> K
+    REG -.pull.-> K

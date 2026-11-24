@@ -1,0 +1,2 @@
+# npm run lint  ·  2026-11-24T22:56:22Z  ·  ESLint v10.15.0
+Resultado: 0 errores, 0 advertencias (exit 0)

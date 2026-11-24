@@ -1,0 +1,6 @@
+flowchart LR
+    U([Coordinación · Facilitadores]) -->|HTTPS en producción| B[Navegador<br/>index.html + js/*]
+    B -->|API REST /api/*<br/>cookie sid HttpOnly · X-Requested-With| S["Servidor Node.js<br/>server/server.js<br/>sitio estático + API + permisos por rol"]
+    S -->|AES-256-GCM<br/>escritura atómica| D[(DATA_DIR<br/>*.json.enc)]
+    B -. "Excel leído y escrito en el navegador" .-> X[[Programacion_2026.xlsx<br/>nunca sale del equipo]]
+    S -. "contrato REST (db/contrato-api.md)" .-> I[(Base institucional<br/>pendiente de TI)]
