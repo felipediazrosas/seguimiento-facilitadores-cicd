@@ -91,10 +91,16 @@ pipeline {
       steps {
         sh '''
           SMOKE="smoke-$BUILD_TAG"
-          SMOKE_KEY="$(od -An -N16 -tx1 /dev/urandom | tr -d ' \\n')"   # clave efímera, no se imprime
+          # Clave efímera: se desactiva el trazado (set -x de Jenkins) para que no aparezca en el log
+          set +x
+          SMOKE_KEY="$(od -An -N16 -tx1 /dev/urandom | tr -d ' \\n')"
+          export DATA_KEY="$SMOKE_KEY" ADMIN_PASS="$SMOKE_KEY"
+          echo "+ docker run -d --name $SMOKE (DATA_KEY y ADMIN_PASS efímeras, ocultas) $IMAGE_REF"
           docker run -d --name "$SMOKE" --read-only --tmpfs /tmp --cap-drop ALL \
             --security-opt no-new-privileges:true \
-            -e DATA_KEY="$SMOKE_KEY" -e ADMIN_USER=smoke -e ADMIN_PASS="$SMOKE_KEY" "$IMAGE_REF"
+            -e DATA_KEY -e ADMIN_USER=smoke -e ADMIN_PASS "$IMAGE_REF"
+          unset SMOKE_KEY DATA_KEY ADMIN_PASS
+          set -x
           for _ in $(seq 1 30); do
             if docker exec "$SMOKE" wget -qO- http://127.0.0.1:8080/api/health 2>/dev/null; then echo; break; fi
             sleep 1
